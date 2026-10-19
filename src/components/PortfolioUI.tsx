@@ -324,7 +324,9 @@ export function SiteHeader({ profile, navigation, showSearch = true, search, onS
           </>
         )}
         <button className="profile-switch" type="button" onClick={() => { setMobileOpen(false); onSwitchProfile(); }} aria-label={`Switch profile, current profile: ${profile.name}`}>
-          <span className={`profile-mini profile-mini-${profile.id}`}>{profile.monogram}</span>
+          <span className={`profile-mini profile-mini-${profile.id}`}>
+            <img src={profile.image} alt="" />
+          </span>
           <span className="profile-switch-label">{profile.name}</span>
           <span className="profile-chevron">⌄</span>
         </button>

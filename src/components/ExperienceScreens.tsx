@@ -189,32 +189,12 @@ interface ProfileScreenProps {
   onBack?: () => void;
 }
 
-function ProfileArtwork({ profileId }: { profileId: ProfileId }) {
-  if (profileId === 'scientist') {
-    return (
-      <img
-        className="profile-artwork profile-scientist-image"
-        src="/assets/scientist-cryoem-profile.png"
-        alt="Cryo-electron microscope and a blue molecular structure"
-      />
-    );
-  }
-
-  if (profileId === 'builder') {
-    return (
-      <img
-        className="profile-artwork profile-builder-image"
-        src="/assets/builder-digital-systems-profile.png"
-        alt="Laptop displaying digital dashboards and workflow tools"
-      />
-    );
-  }
-
+function ProfileArtwork({ profile }: { profile: Profile }) {
   return (
     <img
-      className="profile-artwork profile-full-image"
-      src="/assets/full-story-profile.png"
-      alt="Molecular science connected to digital data systems"
+      className={`profile-artwork profile-${profile.id}-image`}
+      src={profile.image}
+      alt={profile.imageAlt}
     />
   );
 }
@@ -259,7 +239,7 @@ export function ProfileScreen({ profiles, selected, onSelect, onBack }: ProfileS
               transition={{ delay: reduceMotion ? 0 : 0.04 + index * 0.045, duration: reduceMotion ? 0.01 : 0.3 }}
             >
               <span className="profile-avatar">
-                <ProfileArtwork profileId={profile.id} />
+                <ProfileArtwork profile={profile} />
                 <span className="profile-card-shade" />
                 <span className="profile-card-content">
                   <span className="profile-index">0{index + 1}<i /></span>
