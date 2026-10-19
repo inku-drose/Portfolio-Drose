@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 850" role="img" aria-labelledby="title desc">
+  <title id="title">Divisional FACS Facility booking portal cover</title>
+  <desc id="desc">A blue flow-cytometry facility portal cover with cell-analysis visuals and public facility statistics.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#041b37"/><stop offset=".65" stop-color="#07376d"/><stop offset="1" stop-color="#111b5c"/></linearGradient>
+    <linearGradient id="beam"><stop stop-color="#32aaff" stop-opacity="0"/><stop offset=".48" stop-color="#36d6ff" stop-opacity=".8"/><stop offset=".58" stop-color="#a65cff" stop-opacity=".85"/><stop offset="1" stop-color="#4e70ff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="button"><stop stop-color="#308fff"/><stop offset="1" stop-color="#553cf0"/></linearGradient>
+    <linearGradient id="light"><stop stop-color="#eef6ff"/><stop offset="1" stop-color="#dcecff"/></linearGradient>
+    <radialGradient id="cell"><stop stop-color="#5ff4ff"/><stop offset=".25" stop-color="#328aff"/><stop offset=".7" stop-color="#734bff" stop-opacity=".56"/><stop offset="1" stop-color="#1d56a7" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1440" height="850" fill="url(#bg)"/>
+  <g opacity=".55" fill="none" stroke="#42b7ff">
+    <circle cx="1120" cy="315" r="280" stroke-opacity=".13" stroke-width="2"/><circle cx="1120" cy="315" r="215" stroke-opacity=".18" stroke-width="2"/><circle cx="1120" cy="315" r="150" stroke-opacity=".22" stroke-width="2"/>
+  </g>
+  <g opacity=".66">
+    <circle cx="860" cy="306" r="52" fill="url(#cell)"/><circle cx="1010" cy="250" r="62" fill="url(#cell)"/><circle cx="1180" cy="336" r="80" fill="url(#cell)"/><circle cx="1330" cy="210" r="58" fill="url(#cell)"/><circle cx="960" cy="441" r="48" fill="url(#cell)"/>
+  </g>
+  <path d="M740 450 1440 270v68L740 518z" fill="url(#beam)" opacity=".8"/>
+  <g font-family="Arial,sans-serif">
+    <rect x="0" y="0" width="88" height="695" fill="#061a34"/>
+    <circle cx="44" cy="48" r="25" fill="none" stroke="#cedfff" stroke-width="2"/>
+    <path d="M44 27v42M30 48h28" stroke="#cedfff" stroke-width="2"/>
+    <g fill="#bad3f1"><circle cx="44" cy="133" r="10"/><circle cx="44" cy="196" r="8"/><circle cx="44" cy="258" r="8"/><circle cx="44" cy="320" r="8"/><circle cx="44" cy="382" r="8"/><circle cx="44" cy="444" r="8"/></g>
+    <text x="126" y="94" fill="#c7dbf5" font-size="15" font-weight="700" letter-spacing="3">INDIAN INSTITUTE OF SCIENCE · BENGALURU</text>
+    <text x="126" y="202" fill="#fff" font-size="78" font-weight="700">Divisional FACS</text>
+    <text x="126" y="290" fill="#fff" font-size="78" font-weight="700">Facility</text>
+    <text x="130" y="345" fill="#c4d7ed" font-size="21">Advanced cell analysis and sorting, with expert operator</text>
+    <text x="130" y="377" fill="#c4d7ed" font-size="21">support for research at IISc and beyond.</text>
+    <rect x="130" y="424" width="217" height="58" rx="29" fill="url(#button)"/>
+    <text x="238" y="460" fill="#fff" font-size="17" font-weight="700" text-anchor="middle">BOOK A SESSION  →</text>
+    <text x="130" y="544" fill="#d1e1f5" font-size="17">ESTABLISHED 1997</text>
+    <circle cx="333" cy="539" r="4" fill="#54d7f5"/>
+    <text x="354" y="544" fill="#d1e1f5" font-size="17">OPERATOR-ASSISTED</text>
+    <text x="1345" y="640" fill="#c7ddf5" font-size="13" text-anchor="end" letter-spacing="3">FLOW · ANALYZE · DISCOVER</text>
+    <rect x="88" y="695" width="1352" height="155" fill="url(#light)"/>
+    <text x="130" y="748" fill="#14365c" font-size="15" font-weight="700" letter-spacing="3">FACILITY AT A GLANCE</text>
+    <text x="130" y="794" fill="#102e50" font-size="27" font-weight="700">Built around discovery.</text>
+    <g fill="#145eb1" font-weight="700">
+      <text x="868" y="785" font-size="48">04</text><text x="1077" y="785" font-size="48">02</text><text x="1264" y="785" font-size="48">02</text>
+    </g>
+    <g fill="#355574" font-size="14">
+      <text x="868" y="813">FLOW CYTOMETERS</text><text x="1077" y="813">ANALYZERS</text><text x="1264" y="813">CELL SORTERS</text>
+    </g>
+    <path d="M1038 729v90M1220 729v90" stroke="#b3cce7" stroke-width="2"/>
+  </g>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 850" role="img" aria-labelledby="title desc">
+  <title id="title">Microtome histopathology booking cover</title>
+  <desc id="desc">A histopathology facility cover with tissue-inspired imagery, a seven-instrument booking summary, and a four-step workflow.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#f7f3f8"/></linearGradient>
+    <linearGradient id="hero" x2="1" y2="1"><stop stop-color="#3b123f"/><stop offset=".5" stop-color="#7d1d70"/><stop offset="1" stop-color="#d56d9a"/></linearGradient>
+    <radialGradient id="cell"><stop stop-color="#ffc8db" stop-opacity=".78"/><stop offset=".62" stop-color="#9e367f" stop-opacity=".7"/><stop offset="1" stop-color="#4c164f" stop-opacity=".9"/></radialGradient>
+    <linearGradient id="panel"><stop stop-color="#fff"/><stop offset="1" stop-color="#fbf8fc"/></linearGradient>
+  </defs>
+  <rect width="1440" height="850" fill="url(#bg)"/>
+  <rect width="1440" height="82" fill="#fff"/>
+  <path d="M0 81h1440" stroke="#e8e0e9"/>
+  <g font-family="Georgia,serif">
+    <circle cx="75" cy="41" r="25" fill="none" stroke="#6d1768" stroke-width="2"/>
+    <path d="M75 21v40M62 35h26M67 48h16" stroke="#6d1768" stroke-width="2"/>
+    <text x="116" y="39" fill="#311737" font-size="23" font-weight="700">Histopathology Facility</text>
+    <text x="116" y="60" fill="#766978" font-family="Arial,sans-serif" font-size="13">Indian Institute of Science</text>
+    <text x="950" y="48" fill="#493c4d" font-family="Arial,sans-serif" font-size="15">HOME</text>
+    <text x="1045" y="48" fill="#493c4d" font-family="Arial,sans-serif" font-size="15">SERVICES</text>
+    <text x="1155" y="48" fill="#493c4d" font-family="Arial,sans-serif" font-size="15">GUIDELINES</text>
+    <rect x="1290" y="21" width="112" height="41" rx="9" fill="#76186c"/><text x="1346" y="47" fill="#fff" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle">BOOK A SLOT</text>
+  </g>
+  <rect y="82" width="1440" height="455" fill="url(#hero)"/>
+  <g opacity=".82">
+    <circle cx="910" cy="163" r="86" fill="url(#cell)"/><circle cx="1090" cy="135" r="108" fill="url(#cell)"/>
+    <circle cx="1300" cy="217" r="138" fill="url(#cell)"/><circle cx="1018" cy="370" r="132" fill="url(#cell)"/>
+    <circle cx="1240" cy="443" r="105" fill="url(#cell)"/><circle cx="830" cy="420" r="76" fill="url(#cell)"/>
+    <circle cx="1402" cy="378" r="95" fill="url(#cell)"/>
+  </g>
+  <path d="M0 82h1440v455H0z" fill="#321337" opacity=".36"/>
+  <g font-family="Georgia,serif">
+    <text x="115" y="190" fill="#f3b7d6" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="4">FROM TISSUE TO INSIGHT</text>
+    <text x="110" y="281" fill="#fff" font-size="64" font-weight="700">Histopathology</text>
+    <text x="110" y="350" fill="#fff" font-size="64" font-weight="700">Facility</text>
+    <text x="115" y="401" fill="#f6e9f1" font-family="Arial,sans-serif" font-size="20">Advanced tissue processing, sectioning, staining</text>
+    <text x="115" y="432" fill="#f6e9f1" font-family="Arial,sans-serif" font-size="20">and digital pathology support for research at IISc.</text>
+    <rect x="115" y="462" width="213" height="48" rx="8" fill="#fff"/>
+    <text x="221" y="492" fill="#67185f" font-family="Arial,sans-serif" font-size="15" font-weight="700" text-anchor="middle">FACILITY BOOKING</text>
+  </g>
+  <rect y="537" width="1440" height="127" fill="#fff"/>
+  <g font-family="Arial,sans-serif" text-anchor="middle">
+    <g fill="#76186c" font-size="34" font-weight="700"><text x="300" y="597">7</text><text x="720" y="597">4</text><text x="1140" y="597">IISc</text></g>
+    <g fill="#4b4150" font-size="16"><text x="300" y="627">INSTRUMENTS IN THE BOOKING WORKFLOW</text><text x="720" y="627">SIMPLE STEPS TO GET STARTED</text><text x="1140" y="627">ACADEMIC &amp; INDUSTRIAL USERS</text></g>
+  </g>
+  <rect x="70" y="695" width="1300" height="110" rx="20" fill="url(#panel)" stroke="#eadfea"/>
+  <g font-family="Arial,sans-serif" text-anchor="middle">
+    <g fill="#f5e7f1" stroke="#ddb8d5"><circle cx="230" cy="748" r="28"/><circle cx="560" cy="748" r="28"/><circle cx="890" cy="748" r="28"/><circle cx="1220" cy="748" r="28"/></g>
+    <g fill="#76186c" font-size="17" font-weight="700"><text x="230" y="754">01</text><text x="560" y="754">02</text><text x="890" y="754">03</text><text x="1220" y="754">04</text></g>
+    <g fill="#3e3342" font-size="15" font-weight="700"><text x="230" y="793">BOOK A SLOT</text><text x="560" y="793">UPLOAD USER FORM</text><text x="890" y="793">USE THE FACILITY</text><text x="1220" y="793">GET RESULTS</text></g>
+  </g>
+</svg>
