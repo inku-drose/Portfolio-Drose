@@ -238,7 +238,7 @@ export function ProfileScreen({ profiles, selected, onSelect, onBack }: ProfileS
     >
       <div className="profile-screen-top">
         <a className="brand-lockup" href="#home" aria-label="Drose Shane">
-          <span className="brand-mark">DS</span><span>DROSE SHANE</span>
+          <img className="brand-logo" src="/assets/drose-shane-logo.png" alt="" />
         </a>
         {onBack && <button className="text-button" type="button" onClick={onBack}>← Back to portfolio</button>}
       </div>

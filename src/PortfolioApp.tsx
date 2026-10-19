@@ -484,7 +484,7 @@ export default function PortfolioApp() {
         </div>
       </main>
       <footer className="site-footer" id="contact">
-        <a className="brand-lockup" href="#home"><span className="brand-mark">DS</span><span className="brand-name">DROSE SHANE</span></a>
+        <a className="brand-lockup" href="#home" aria-label="Drose Shane home"><img className="brand-logo" src="/assets/drose-shane-logo.png" alt="" /></a>
         <p>FROM MOLECULAR SCIENCE <span>TO DIGITAL SOLUTIONS.</span></p>
         <a href="#projects" className="footer-contact">Explore the projects <Icon name="arrow" /></a>
         <span className="footer-credit">PERSONAL PORTFOLIO · BENGALURU</span>

@@ -298,7 +298,7 @@ export function SiteHeader({ profile, navigation, showSearch = true, search, onS
   return (
     <header className="site-header">
       <a className="brand-lockup" href="#home" aria-label="Drose Shane home">
-        <span className="brand-mark">DS</span><span className="brand-name">DROSE SHANE</span>
+        <img className="brand-logo" src="/assets/drose-shane-logo.png" alt="" />
       </a>
       <button className="mobile-menu-toggle" type="button" aria-expanded={mobileOpen} aria-controls="primary-navigation" aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'} onClick={() => setMobileOpen((open) => !open)}>{mobileOpen ? '×' : '☰'}</button>
       {navigation.length > 0 && (
