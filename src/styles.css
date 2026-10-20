@@ -416,7 +416,7 @@ svg { width: 18px; height: 18px; flex: 0 0 auto; }
 .research-project-card .toolkit-tags { margin-top: 14px; }
 .facility-projects-heading { margin-top: 28px; }
 .facility-projects-heading .section-kicker { margin-bottom: 6px; }
-.scientist-section-tiles { position: relative; z-index: 4; display: grid; width: min(100%, 1360px); grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px auto 72px; padding: 0 var(--gutter); }
+.scientist-section-tiles { position: relative; z-index: 4; display: grid; width: 100%; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px 0 72px; padding: 0 var(--gutter); }
 .scientist-section-tile { --tile-accent: var(--cyan); --pointer-shadow-color: var(--tile-accent); display: grid; min-width: 0; min-height: 96px; grid-template-columns: auto 1fr auto; align-items: center; gap: 13px; border: 1px solid var(--line); border-radius: 3px; background: linear-gradient(145deg, var(--panel), var(--ink-2)); padding: 15px; transition: border-color .2s ease, transform .22s ease, background .22s ease, box-shadow .22s ease; }
 .scientist-section-tile:hover, .scientist-section-tile:focus-visible { transform: translateY(-3px); border-color: color-mix(in srgb, var(--tile-accent) 62%, transparent); background: linear-gradient(145deg, var(--panel-hi), var(--ink-2)); box-shadow: 0 12px 30px color-mix(in srgb, var(--tile-accent) 12%, transparent); }
 .scientist-section-tile:active, .cta:active, .footer-contact:active { transform: translateY(0) scale(.985); }
@@ -602,6 +602,7 @@ svg { width: 18px; height: 18px; flex: 0 0 auto; }
 }
 @media (max-width: 1050px) {
   .hero-content { width: 72%; }
+  .scientist-section-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .toolkit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .toolkit-card { min-height: 205px; }
   .about-section { grid-template-columns: .85fr 1.15fr; }
