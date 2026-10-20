@@ -78,10 +78,12 @@ interface ProjectRailProps {
   subtitle?: string;
   projects: PortfolioProject[];
   onOpen: (project: PortfolioProject, trigger: HTMLButtonElement) => void;
+  railRef?: MutableRefObject<HTMLDivElement | null>;
 }
 
-export function ProjectRail({ title, subtitle, projects, onOpen }: ProjectRailProps) {
-  const rail = useRef<HTMLDivElement>(null);
+export function ProjectRail({ title, subtitle, projects, onOpen, railRef }: ProjectRailProps) {
+  const internalRail = useRef<HTMLDivElement>(null);
+  const rail = railRef ?? internalRail;
   const reduceMotion = useReducedMotion();
   return (
     <motion.div

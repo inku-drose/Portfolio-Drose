@@ -339,7 +339,7 @@ export const education = [
     title: 'B.Tech in Biotechnology',
     organization: 'Kalasalingam Academy of Research and Education',
     specialization: 'Biotechnology',
-    years: '2018–2024',
+    years: '2018–2022',
     gpa: '8.7 / 10 CGPA',
   },
 ];

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
   careerExperience,
@@ -58,11 +58,16 @@ function getProfile(id: ProfileId | null): Profile {
   return profiles.find((profile) => profile.id === id) ?? profiles[2];
 }
 
-function SectionHeading({ id, kicker, title, detail }: { id?: string; kicker: string; title: string; detail?: string }) {
+function SectionHeading({ id, kicker, title, detail, controls }: { id?: string; kicker: string; title: string; detail?: string; controls?: ReactNode }) {
   return (
     <div className="catalogue-heading">
       <div><p className="section-kicker">{kicker}</p><h2 id={id}>{title}</h2></div>
-      {detail && <span className="toolkit-aside">{detail}</span>}
+      {(detail || controls) && (
+        <div className="catalogue-heading-tools">
+          {detail && <span className="toolkit-aside">{detail}</span>}
+          {controls}
+        </div>
+      )}
     </div>
   );
 }
@@ -79,6 +84,8 @@ function ProjectSection({
   onOpen: (project: PortfolioProject, trigger: HTMLButtonElement) => void;
 }) {
   const content = profileContent[profile];
+  const projectRail = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
   const sectionLabel = 'WEBSITES';
   return (
     <section className="catalogue-section projects-section" id="projects" aria-label={content.projectTitle}>
@@ -86,6 +93,12 @@ function ProjectSection({
         kicker={search ? 'SEARCH RESULTS' : content.projectKicker}
         title={search ? 'Matching projects and websites' : content.projectTitle}
         detail={content.projectNote}
+        controls={items.length > 1 && (
+          <div className="rail-arrows">
+            <button type="button" aria-label={`Scroll ${content.projectTitle} left`} onClick={() => projectRail.current?.scrollBy({ left: -projectRail.current.clientWidth * 0.85, behavior: reduceMotion ? 'auto' : 'smooth' })}>‹</button>
+            <button type="button" aria-label={`Scroll ${content.projectTitle} right`} onClick={() => projectRail.current?.scrollBy({ left: projectRail.current.clientWidth * 0.85, behavior: reduceMotion ? 'auto' : 'smooth' })}>›</button>
+          </div>
+        )}
       />
       {profile !== 'scientist' && <ProjectSearchStatus count={items.length} query={search} />}
       {(profile === 'scientist' || profile === 'full') && (
@@ -113,7 +126,7 @@ function ProjectSection({
               <h3>Facility websites &amp; digital workflows</h3>
             </div>
           )}
-          <ProjectRail title="" projects={items} onOpen={onOpen} />
+          <ProjectRail title="" projects={items} onOpen={onOpen} railRef={projectRail} />
           <div className="project-browse-note">
             <span>{content.projectNote}</span>
             <span>{items.length} / {projects.length} {sectionLabel} <i /></span>
@@ -298,6 +311,77 @@ function EducationSection() {
   );
 }
 
+function ClosingSection({ profile }: { profile: Profile }) {
+  const profileLabel = profile.id === 'scientist'
+    ? 'THE BIOLOGIST'
+    : profile.id === 'builder'
+      ? 'THE WEB DEVELOPER'
+      : 'THE FULL STORY';
+  const closingLine = profile.id === 'scientist'
+    ? 'The science continues. Let’s stay connected.'
+    : profile.id === 'builder'
+      ? 'The next useful tool starts with a conversation.'
+      : 'From scientific discovery to digital solutions — let’s build what comes next.';
+
+  const updateClosingTextGlow = (event: ReactPointerEvent<HTMLHeadingElement>) => {
+    if (event.pointerType === 'touch') return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty('--closing-text-glow-x', `${event.clientX - bounds.left}px`);
+    event.currentTarget.style.setProperty('--closing-text-glow-y', `${event.clientY - bounds.top}px`);
+    event.currentTarget.style.setProperty('--closing-text-glow-opacity', '1');
+  };
+
+  const clearClosingTextGlow = (event: ReactPointerEvent<HTMLHeadingElement>) => {
+    event.currentTarget.style.removeProperty('--closing-text-glow-opacity');
+  };
+
+  return (
+    <section className="closing-section" id="contact" aria-labelledby="closing-heading">
+      <div className="closing-content">
+        <h2
+          id="closing-heading"
+          onPointerMove={updateClosingTextGlow}
+          onPointerLeave={clearClosingTextGlow}
+        >
+          TO BE CONTINUED...<span className="closing-text-glow" aria-hidden="true">TO BE CONTINUED...</span>
+        </h2>
+        <p className="closing-name">Drose Shane</p>
+        <p className="closing-role">{profileLabel}</p>
+        <p className="closing-copy">{closingLine}</p>
+        <nav className="closing-links" aria-label="Contact and professional links">
+          <a className="closing-link closing-link-primary" href="mailto:ignatious9894@gmail.com">
+            Email me <Icon name="arrow" />
+          </a>
+          <a className="closing-link" href="https://www.linkedin.com/in/drose-ignatious-shane" target="_blank" rel="noopener noreferrer">
+            LinkedIn <Icon name="external" />
+          </a>
+          {profile.id !== 'builder' && (
+            <a className="closing-link" href="https://orcid.org/0000-0002-5329-0748" target="_blank" rel="noopener noreferrer">
+              ORCID <Icon name="external" />
+            </a>
+          )}
+          <a className="closing-link" href="/drose-shane-resume.pdf" target="_blank" rel="noopener noreferrer">
+            Resume <Icon name="external" />
+          </a>
+        </nav>
+        <a className="closing-replay" href="#home">↑ &nbsp; Back to the beginning</a>
+      </div>
+    </section>
+  );
+}
+
+function updateHeroNameGlow(event: ReactPointerEvent<HTMLElement>) {
+  if (event.pointerType === 'touch') return;
+  const bounds = event.currentTarget.getBoundingClientRect();
+  event.currentTarget.style.setProperty('--hero-glow-x', `${event.clientX - bounds.left}px`);
+  event.currentTarget.style.setProperty('--hero-glow-y', `${event.clientY - bounds.top}px`);
+  event.currentTarget.style.setProperty('--hero-glow-opacity', '1');
+}
+
+function clearHeroNameGlow(event: ReactPointerEvent<HTMLElement>) {
+  event.currentTarget.style.removeProperty('--hero-glow-opacity');
+}
+
 function ProfileSectionTiles({ profile }: { profile: ProfileId }) {
   const sections = profile === 'scientist'
     ? [
@@ -400,7 +484,6 @@ export default function PortfolioApp() {
     }
     setScreen('home');
   };
-
   if (screen !== 'home') {
     return (
       <ExperienceTransition
@@ -461,7 +544,22 @@ export default function PortfolioApp() {
           />
           <div className="hero-content">
             <p className="profile-context">{activeProfile.descriptor}</p>
-            <h1 className="hero-name" id="hero-name"><span>Drose</span> <em>Shane</em></h1>
+            <h1 className="hero-name" id="hero-name">
+              <span
+                className="hero-name-word hero-name-first"
+                onPointerMove={updateHeroNameGlow}
+                onPointerLeave={clearHeroNameGlow}
+              >
+                Drose<span className="hero-name-glow" aria-hidden="true">Drose</span>
+              </span>{' '}
+              <em
+                className="hero-name-word hero-name-last"
+                onPointerMove={updateHeroNameGlow}
+                onPointerLeave={clearHeroNameGlow}
+              >
+                Shane<span className="hero-name-glow" aria-hidden="true">Shane</span>
+              </em>
+            </h1>
             <h2 className="hero-tagline">{activeProfile.id === 'scientist' ? <>CRYO-EM SCIENCE<br />& FACILITY PRACTICE.</> : activeProfile.id === 'builder' ? <>DIGITAL SYSTEMS<br />FOR SCIENTIFIC WORK.</> : <>FROM MOLECULAR SCIENCE<br />TO DIGITAL SOLUTIONS.</>}</h2>
             <p className="hero-description">{profileIntro}</p>
             <div className="hero-cta">
@@ -482,12 +580,13 @@ export default function PortfolioApp() {
           {activeProfile.id !== 'builder' && <PublicationsSection />}
           {activeProfile.id !== 'builder' && <EducationSection />}
         </div>
+        <ClosingSection profile={activeProfile} />
       </main>
-      <footer className="site-footer" id="contact">
+      <footer className="site-footer">
         <a className="brand-lockup" href="#home" aria-label="Drose Shane home"><img className="brand-logo" src="/assets/drose-shane-logo-blended.png" alt="" /></a>
-        <p>FROM MOLECULAR SCIENCE <span>TO DIGITAL SOLUTIONS.</span></p>
-        <a href="#projects" className="footer-contact">Explore the projects <Icon name="arrow" /></a>
-        <span className="footer-credit">PERSONAL PORTFOLIO · BENGALURU</span>
+        <p>{activeProfile.descriptor}</p>
+        <a href="#home" className="footer-contact">Back to top <Icon name="arrow" /></a>
+        <span className="footer-credit">© {new Date().getFullYear()} DROSE SHANE · PERSONAL PORTFOLIO · BENGALURU</span>
       </footer>
       <ProjectModal
         project={activeProject}
