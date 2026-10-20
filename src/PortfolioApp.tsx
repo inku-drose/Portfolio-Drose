@@ -58,7 +58,7 @@ function getProfile(id: ProfileId | null): Profile {
   return profiles.find((profile) => profile.id === id) ?? profiles[2];
 }
 
-function SectionHeading({ id, kicker, title, detail, controls }: { id?: string; kicker: string; title: string; detail?: string; controls?: ReactNode }) {
+function SectionHeading({ id, kicker, title, detail, controls }: { id?: string; kicker: string; title: string; detail?: ReactNode; controls?: ReactNode }) {
   return (
     <div className="catalogue-heading">
       <div><p className="section-kicker">{kicker}</p><h2 id={id}>{title}</h2></div>
@@ -206,7 +206,12 @@ function CareerSection({ profile }: { profile: ProfileId }) {
 
   return (
     <section className="profile-content-section" id="experience" aria-labelledby="experience-heading">
-      <SectionHeading id="experience-heading" kicker="PROFESSIONAL EXPERIENCE" title="Cryo-EM & facility operations" detail={currentRole.organization} />
+      <SectionHeading
+        id="experience-heading"
+        kicker="PROFESSIONAL EXPERIENCE"
+        title="Cryo-EM & facility operations"
+        detail={<><span>Advanced Center for Cryo Electron Microscopy (ACCEM)</span><span>Indian Institute of Science, Bangalore</span></>}
+      />
       <div className="profile-story-columns scientist-experience-columns">
         <article className="profile-story-card">
           <p className="section-kicker">CURRENT ROLE · 3 YEARS</p>
