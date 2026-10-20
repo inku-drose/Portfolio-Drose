@@ -503,6 +503,7 @@ svg { width: 18px; height: 18px; flex: 0 0 auto; }
 .theme-scientist .catalogue-heading h2 { font-size: clamp(25px, 2.6vw, 34px); letter-spacing: -.035em; }
 .theme-scientist .section-kicker { color: #91d5ff; font-size: 9px; letter-spacing: .13em; }
 .theme-scientist .toolkit-aside { max-width: 310px; color: #b4c2cc; font-size: 11px; line-height: 1.65; }
+.theme-scientist .toolkit-aside > span { display: block; }
 .theme-scientist .profile-story-columns { gap: 18px; }
 .theme-scientist .profile-story-card { border-color: rgba(127, 202, 255, .24); background: linear-gradient(145deg, #111f30, #0c1420); padding: clamp(22px, 2.8vw, 34px); }
 .theme-scientist .profile-story-card h3 { font-size: clamp(19px, 1.8vw, 24px); line-height: 1.4; }
