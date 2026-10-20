@@ -12,6 +12,8 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
   const [showAction, setShowAction] = useState(false);
   const screenRef = useRef<HTMLElement>(null);
   const touchStartY = useRef<number | null>(null);
+  const touchStartProgress = useRef(0);
+  const touchDeltaY = useRef(0);
   const actionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const actionVisible = useRef(false);
   const progress = useMotionValue(0);
@@ -65,16 +67,23 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
     };
     const onTouchStart = (event: TouchEvent) => {
       touchStartY.current = event.touches[0]?.clientY ?? null;
+      touchStartProgress.current = progress.get();
+      touchDeltaY.current = 0;
     };
     const onTouchMove = (event: TouchEvent) => {
       const touchY = event.touches[0]?.clientY;
       if (touchStartY.current === null || touchY === undefined) return;
       event.preventDefault();
-      setProgress(touchStartY.current - touchY, 850);
-      touchStartY.current = touchY;
+      const deltaY = touchStartY.current - touchY;
+      touchDeltaY.current = deltaY;
+      progress.set(Math.max(0, Math.min(1, touchStartProgress.current + deltaY / 420)));
     };
     const onTouchEnd = () => {
+      if (Math.abs(touchDeltaY.current) >= 70) {
+        progress.set(touchDeltaY.current > 0 ? 1 : 0);
+      }
       touchStartY.current = null;
+      touchDeltaY.current = 0;
     };
 
     screen.addEventListener('wheel', onWheel, { passive: false });
