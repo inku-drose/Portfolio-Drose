@@ -15,7 +15,7 @@ export const profiles: Profile[] = [
     name: 'The Biologist',
     descriptor: 'CRYO-EM · STRUCTURE · FACILITY OPERATIONS',
     description: 'A closer look at the science, instruments, and facility work.',
-    image: '/assets/drose-shane-cryo-em-specialist-profile.png',
+    image: '/assets/drose-shane-cryo-em-specialist-profile.webp',
     imageAlt: 'Cryo-electron microscope and a blue molecular structure',
   },
   {
@@ -23,7 +23,7 @@ export const profiles: Profile[] = [
     name: 'The Web Developer',
     descriptor: 'WEB APPS · DIGITAL SYSTEMS · AUTOMATION',
     description: 'Explore practical tools built around real scientific workflows.',
-    image: '/assets/drose-shane-digital-systems-builder-profile.png',
+    image: '/assets/drose-shane-digital-systems-builder-profile.webp',
     imageAlt: 'Laptop displaying digital dashboards and workflow tools',
   },
   {
@@ -31,7 +31,7 @@ export const profiles: Profile[] = [
     name: 'The Full Story',
     descriptor: 'SCIENCE × DIGITAL × IMPACT',
     description: 'The complete story, from molecular science to digital solutions.',
-    image: '/assets/drose-shane-full-story-profile.png',
+    image: '/assets/drose-shane-full-story-profile.webp',
     imageAlt: 'Molecular science connected to digital data systems',
   },
 ];

@@ -588,10 +588,10 @@ export default function PortfolioApp() {
         <ClosingSection profile={activeProfile} />
       </main>
       <footer className="site-footer">
-        <a className="brand-lockup" href="#home" aria-label="Drose Shane home"><img className="brand-logo" src="/assets/drose-shane-logo-blended.png" alt="" /></a>
+        <a className="brand-lockup" href="#home" aria-label="Drose Shane home"><img className="brand-logo" src="/assets/drose-shane-logo-blended.webp" alt="" /></a>
         <p>{activeProfile.descriptor}</p>
         <a href="#home" className="footer-contact">Back to top <Icon name="arrow" /></a>
-        <span className="footer-credit">© {new Date().getFullYear()} DROSE SHANE · PERSONAL PORTFOLIO · BENGALURU</span>
+        <span className="footer-credit">© {new Date().getFullYear()} Drose Ignatious Shane. All rights reserved.</span>
       </footer>
       <ProjectModal
         project={activeProject}
