@@ -207,6 +207,7 @@ svg { width: 18px; height: 18px; flex: 0 0 auto; }
 .profile-choice:focus-visible { outline: 2px solid var(--profile-accent); outline-offset: 5px; }
 .profile-footer { margin: 48px 0 0; color: #5f727c; font: 8px var(--mono); letter-spacing: .13em; }
 .profile-footer span { padding: 0 7px; color: var(--cyan); }
+.profile-screen-footer { position: absolute; right: var(--gutter); bottom: 14px; left: var(--gutter); margin: 0; color: #5b6b73; font: 8px var(--mono); letter-spacing: .08em; text-align: center; }
 
 /* Site navigation */
 .site-header { position: fixed; z-index: 20; top: 0; right: 0; left: 0; display: grid; height: 74px; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 var(--gutter); background: linear-gradient(180deg, rgba(4, 7, 11, .92), rgba(4, 7, 11, .63) 67%, transparent); transition: height .2s ease, background-color .2s ease; }
@@ -656,6 +657,7 @@ svg { width: 18px; height: 18px; flex: 0 0 auto; }
   .profile-description { max-width: calc(100% - 50px); margin-top: 9px; font-size: 11px; }
   .profile-arrow { right: 16px; bottom: 15px; width: 42px; height: 42px; font-size: 22px; }
   .profile-footer { margin-top: 21px; font-size: 6px; }
+  .profile-screen-footer { position: static; margin: 18px 0 0; font-size: 7px; }
   .profile-page { gap: 12px; padding-bottom: 25px; }
   .scientist-section-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 12px auto 50px; }
   .scientist-section-tile { min-height: 82px; gap: 8px; padding: 11px 9px; }

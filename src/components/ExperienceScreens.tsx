@@ -204,6 +204,8 @@ function ProfileArtwork({ profile }: { profile: Profile }) {
       className={`profile-artwork profile-${profile.id}-image`}
       src={profile.image}
       alt={profile.imageAlt}
+      decoding="async"
+      fetchPriority={profile.id === 'scientist' ? 'high' : 'low'}
     />
   );
 }
@@ -227,7 +229,7 @@ export function ProfileScreen({ profiles, selected, onSelect, onBack }: ProfileS
     >
       <div className="profile-screen-top">
         <a className="brand-lockup" href="#home" aria-label="Drose Shane">
-          <img className="brand-logo" src="/assets/drose-shane-logo-blended.png" alt="" />
+          <img className="brand-logo" src="/assets/drose-shane-logo-blended.webp" alt="" />
         </a>
         {onBack && <button className="text-button" type="button" onClick={onBack}>← Back to portfolio</button>}
       </div>
@@ -263,6 +265,7 @@ export function ProfileScreen({ profiles, selected, onSelect, onBack }: ProfileS
         </div>
         <p className="profile-footer">YOUR EXPERIENCE, YOUR WAY <span>·</span> PRESS A PROFILE TO BEGIN</p>
       </div>
+      <p className="profile-screen-footer">© {new Date().getFullYear()} Drose Ignatious Shane. All rights reserved.</p>
     </motion.section>
   );
 }
