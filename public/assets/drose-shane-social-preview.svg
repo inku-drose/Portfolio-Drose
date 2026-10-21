@@ -25,5 +25,7 @@
   <path d="M64 407h420" stroke="#31505d" stroke-width="1"/>
   <text x="64" y="456" fill="#e5edf0" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="1">CRYO-EM SPECIALIST</text>
   <text x="64" y="496" fill="#e5edf0" font-family="Arial, sans-serif" font-size="20">Facility Manager · IISc Bengaluru</text>
-  <text x="64" y="567" fill="#79909b" font-family="Arial, sans-serif" font-size="15" letter-spacing="2">SCIENTIFIC WORKFLOWS  /  DIGITAL LABORATORY TOOLS</text>
+  <text x="64" y="540" fill="#79909b" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">SCIENTIFIC WORKFLOWS / DIGITAL LAB TOOLS</text>
+  <rect x="64" y="562" width="258" height="46" rx="23" fill="url(#accent)"/>
+  <text x="84" y="592" fill="#061014" font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing=".5">EXPLORE THE PORTFOLIO  →</text>
 </svg>
