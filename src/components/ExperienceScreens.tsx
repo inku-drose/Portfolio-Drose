@@ -136,7 +136,7 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
     >
       <motion.img
         className="intro-portrait"
-        src="/assets/drose-portrait-warm.webp"
+        src="/assets/drose-shane-cryo-em-specialist-portrait-warm.webp"
         alt=""
         aria-hidden="true"
         style={{ opacity: portraitOpacity, clipPath: portraitClip }}

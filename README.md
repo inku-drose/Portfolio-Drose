@@ -33,9 +33,9 @@ The production site is generated in `dist/` and can be deployed to a static host
 - `src/components/ExperienceScreens.tsx` contains the cinematic intro and viewer profile selector.
 - `src/components/PortfolioUI.tsx` contains navigation, search, original project artwork, carousels, and the project detail dialog.
 - `src/styles.css` contains responsive styling, animation, focus states, and reduced-motion fallbacks.
-- `public/assets/protein-rotation.mp4` and `protein-rotation-poster.jpg` provide the 60 fps title-card background video and its still fallback.
-- `public/assets/drose-portrait-warm.webp` is the alternate optimized portrait layered into the home hero.
-- `public/assets/scientist-cryoem-profile.png`, `builder-digital-systems-profile.png`, and `full-story-profile.png` are the supplied profile-card images for The Scientist, The Builder, and The Full Story.
+- `public/assets/protein-rotation.mp4` and `drose-shane-protein-rotation-poster.jpg` provide the 60 fps title-card background video and its still fallback.
+- `public/assets/drose-shane-cryo-em-specialist-portrait-warm.webp` is the alternate optimized portrait layered into the home hero.
+- The `public/assets/drose-shane-*-profile.png` files are the supplied profile-card images for The Scientist, The Builder, and The Full Story.
 
 No technology stack, impact metrics, or personal contact address is invented. Facility project details link to the live websites and do not expose source repository links.
 
