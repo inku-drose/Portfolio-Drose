@@ -28,12 +28,18 @@ interface ArtworkProps {
 
 export function ProjectArtwork({ artwork, compact = false }: ArtworkProps) {
   const suppliedCovers: Partial<Record<PortfolioProject['artwork'], string>> = {
-    accem: '/assets/project-covers/accem-homepage.png',
-    tem: '/assets/project-covers/tem-homepage.png',
-    microtome: '/assets/project-covers/histopathology-homepage.png',
-    facs: '/assets/project-covers/facs-homepage.png',
+    accem: '/assets/project-covers/drose-shane-accem-facility-portal-cover.png',
+    tem: '/assets/project-covers/drose-shane-tem-booking-terminal-cover.png',
+    microtome: '/assets/project-covers/drose-shane-histopathology-facility-booking-cover.png',
+    facs: '/assets/project-covers/drose-shane-facs-booking-portal-cover.png',
   };
-  const coverImage = suppliedCovers[artwork] ?? `/assets/project-covers/${artwork}.svg`;
+  const fallbackCovers: Record<PortfolioProject['artwork'], string> = {
+    accem: '/assets/project-covers/drose-shane-accem-project-cover.svg',
+    tem: '/assets/project-covers/drose-shane-tem-project-cover.svg',
+    microtome: '/assets/project-covers/drose-shane-microtome-project-cover.svg',
+    facs: '/assets/project-covers/drose-shane-facs-project-cover.svg',
+  };
+  const coverImage = suppliedCovers[artwork] ?? fallbackCovers[artwork];
   const isSuppliedCover = artwork in suppliedCovers;
 
   return (
