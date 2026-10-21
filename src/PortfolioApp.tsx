@@ -541,7 +541,7 @@ export default function PortfolioApp() {
           <div className="hero-vignette" aria-hidden="true" />
           <motion.img
             className="hero-portrait"
-            src="/assets/drose-portrait-warm.webp"
+            src="/assets/drose-shane-cryo-em-specialist-portrait-warm.webp"
             alt="Portrait of Drose Shane"
             initial={{ opacity: 0, x: reduceMotion ? 0 : 24 }}
             animate={{ opacity: 1, x: 0 }}
