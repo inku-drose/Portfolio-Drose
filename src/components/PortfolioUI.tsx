@@ -28,10 +28,10 @@ interface ArtworkProps {
 
 export function ProjectArtwork({ artwork, compact = false }: ArtworkProps) {
   const suppliedCovers: Partial<Record<PortfolioProject['artwork'], string>> = {
-    accem: '/assets/project-covers/drose-shane-accem-facility-portal-cover.png',
-    tem: '/assets/project-covers/drose-shane-tem-booking-terminal-cover.png',
-    microtome: '/assets/project-covers/drose-shane-histopathology-facility-booking-cover.png',
-    facs: '/assets/project-covers/drose-shane-facs-booking-portal-cover.png',
+    accem: '/assets/project-covers/drose-shane-accem-facility-portal-cover.webp',
+    tem: '/assets/project-covers/drose-shane-tem-booking-terminal-cover.webp',
+    microtome: '/assets/project-covers/drose-shane-histopathology-facility-booking-cover.webp',
+    facs: '/assets/project-covers/drose-shane-facs-booking-portal-cover.webp',
   };
   const fallbackCovers: Record<PortfolioProject['artwork'], string> = {
     accem: '/assets/project-covers/drose-shane-accem-project-cover.svg',
@@ -44,8 +44,8 @@ export function ProjectArtwork({ artwork, compact = false }: ArtworkProps) {
 
   return (
     <div className={`project-art art-${artwork}${compact ? ' is-compact' : ''}${isSuppliedCover ? ' has-full-cover-image' : ''}`} aria-hidden="true">
-      {isSuppliedCover && <img className="project-art-backdrop" src={coverImage} alt="" />}
-      <img className="project-art-cover" src={coverImage} alt="" />
+      {isSuppliedCover && <img className="project-art-backdrop" src={coverImage} alt="" loading={compact ? 'lazy' : 'eager'} decoding="async" />}
+      <img className="project-art-cover" src={coverImage} alt="" loading={compact ? 'lazy' : 'eager'} decoding="async" />
     </div>
   );
 }
@@ -306,7 +306,7 @@ export function SiteHeader({ profile, navigation, showSearch = true, search, onS
   return (
     <header className="site-header">
       <a className="brand-lockup" href="#home" aria-label="Drose Shane home">
-        <img className="brand-logo" src="/assets/drose-shane-logo-blended.png" alt="" />
+        <img className="brand-logo" src="/assets/drose-shane-logo-blended.webp" alt="" />
       </a>
       <button className="mobile-menu-toggle" type="button" aria-expanded={mobileOpen} aria-controls="primary-navigation" aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'} onClick={() => setMobileOpen((open) => !open)}>{mobileOpen ? '×' : '☰'}</button>
       {navigation.length > 0 && (
