@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071017"/>
+      <stop offset="1" stop-color="#101b27"/>
+    </linearGradient>
+    <linearGradient id="photo-fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#071017"/>
+      <stop offset=".28" stop-color="#071017" stop-opacity=".78"/>
+      <stop offset=".7" stop-color="#071017" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#16c9ef"/>
+      <stop offset="1" stop-color="#22d8b1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <circle cx="355" cy="288" r="340" fill="#16c9ef" opacity=".055"/>
+  <image href="drose-shane-cryo-em-specialist-portrait-warm.webp" x="645" y="-30" width="555" height="690" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="600" width="600" height="630" fill="url(#photo-fade)"/>
+  <path d="M64 76h52" stroke="url(#accent)" stroke-width="4"/>
+  <text x="64" y="123" fill="#8da6b2" font-family="Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="4">CRYO-EM · SCIENCE · DIGITAL SYSTEMS</text>
+  <text x="60" y="278" fill="#f4f7f8" font-family="Arial, sans-serif" font-size="75" font-weight="700" letter-spacing="-3">Drose</text>
+  <text x="60" y="365" fill="#22d8ef" font-family="Arial, sans-serif" font-size="75" font-weight="700" letter-spacing="-3">Ignatious Shane</text>
+  <path d="M64 407h420" stroke="#31505d" stroke-width="1"/>
+  <text x="64" y="456" fill="#e5edf0" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="1">CRYO-EM SPECIALIST</text>
+  <text x="64" y="496" fill="#e5edf0" font-family="Arial, sans-serif" font-size="20">Facility Manager · IISc Bengaluru</text>
+  <text x="64" y="567" fill="#79909b" font-family="Arial, sans-serif" font-size="15" letter-spacing="2">SCIENTIFIC WORKFLOWS  /  DIGITAL LABORATORY TOOLS</text>
+</svg>
