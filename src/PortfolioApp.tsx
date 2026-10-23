@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import Lenis from 'lenis';
 import {
   careerExperience,
-  cryoEmWorkflow,
+  cryoEmPractice,
   education,
   educationAchievements,
   profiles,
@@ -19,14 +20,14 @@ import {
   type ProfileId,
 } from './data/portfolio';
 import { ExperienceTransition } from './components/ExperienceScreens';
-import { FontComparison } from './components/FontComparison';
 import {
   Icon,
-  ProjectModal,
   ProjectRail,
   ProjectSearchStatus,
   SiteHeader,
 } from './components/PortfolioUI';
+
+const LazyProjectModal = lazy(() => import('./components/ProjectModal').then(({ ProjectModal }) => ({ default: ProjectModal })));
 
 type Screen = 'intro' | 'profiles' | 'home';
 const PROFILE_STORAGE_KEY = 'drose-shane-viewing-profile';
@@ -93,7 +94,7 @@ function ProjectSection({
         kicker={search ? 'SEARCH RESULTS' : content.projectKicker}
         title={search ? 'Matching projects and websites' : content.projectTitle}
         detail={content.projectNote}
-        controls={items.length > 1 && (
+        controls={profile === 'builder' && items.length > 1 && (
           <div className="rail-arrows">
             <button type="button" aria-label={`Scroll ${content.projectTitle} left`} onClick={() => projectRail.current?.scrollBy({ left: -projectRail.current.clientWidth * 0.85, behavior: reduceMotion ? 'auto' : 'smooth' })}>‹</button>
             <button type="button" aria-label={`Scroll ${content.projectTitle} right`} onClick={() => projectRail.current?.scrollBy({ left: projectRail.current.clientWidth * 0.85, behavior: reduceMotion ? 'auto' : 'smooth' })}>›</button>
@@ -107,9 +108,8 @@ function ProjectSection({
             <h3>{profile === 'scientist' ? 'Three projects spanning cryo-EM, cell biology, and pharmacoinformatics' : 'Research projects'}</h3>
           </div>
           <div className="research-project-grid">
-            {researchProjects.map((project, index) => (
+            {researchProjects.map((project) => (
               <article className="research-project-card" key={project.id}>
-                <span className="research-project-index">0{index + 1}</span>
                 <p className="section-kicker">{project.degree}</p>
                 <h4>{renderScientificNames(project.title)}</h4>
                 <ul>{project.methods.map((method) => <li key={method}>{renderScientificNames(method)}</li>)}</ul>
@@ -124,6 +124,12 @@ function ProjectSection({
           {profile === 'full' && (
             <div className="facility-projects-heading">
               <h3>Facility websites &amp; digital workflows</h3>
+              {items.length > 1 && (
+                <div className="rail-arrows">
+                  <button type="button" aria-label="Scroll facility websites left" onClick={() => projectRail.current?.scrollBy({ left: -projectRail.current.clientWidth * 0.85, behavior: reduceMotion ? 'auto' : 'smooth' })}>‹</button>
+                  <button type="button" aria-label="Scroll facility websites right" onClick={() => projectRail.current?.scrollBy({ left: projectRail.current.clientWidth * 0.85, behavior: reduceMotion ? 'auto' : 'smooth' })}>›</button>
+                </div>
+              )}
             </div>
           )}
           <ProjectRail title="" projects={items} onOpen={onOpen} railRef={projectRail} />
@@ -134,6 +140,50 @@ function ProjectSection({
         </>
       )}
     </section>
+  );
+}
+
+function CryoEmPracticeCard({
+  currentRole,
+  showOrganization,
+}: {
+  currentRole: (typeof careerExperience)[number];
+  showOrganization: boolean;
+}) {
+  return (
+    <article className="profile-story-card workflow-card featured-role scientific-practice-card">
+      <p className="section-kicker">SCIENTIFIC PRACTICE</p>
+      <h3 className="practice-heading">Cryo-EM sample preparation</h3>
+      <div className="scientific-practice-layout">
+        <section className="practice-role-details">
+          <p className="section-kicker">CURRENT ROLE</p>
+          <h4>{currentRole.title}</h4>
+          <p>{showOrganization ? `${currentRole.organization} · ` : ''}{currentRole.detail}</p>
+          <ul className="role-responsibilities">{currentRole.responsibilities?.slice(0, 3).map((item) => <li key={item}>{item}</li>)}</ul>
+        </section>
+        <div className="practice-technical-details">
+          <div className="practice-spec-grid">
+            {cryoEmPractice.samplePreparation.map((practice) => (
+              <section className="practice-spec" key={practice.category}>
+                <h4>{practice.category}</h4>
+                <ul>{practice.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
+              </section>
+            ))}
+          </div>
+          <section className="practice-data-section" aria-labelledby="practice-data-heading">
+            <h4 id="practice-data-heading">Data collection</h4>
+            <div className="practice-spec-grid">
+              {cryoEmPractice.dataCollection.map((practice) => (
+                <section className="practice-spec" key={practice.category}>
+                  <h5>{practice.category}</h5>
+                  <ul>{practice.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
+                </section>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -174,17 +224,8 @@ function CareerSection({ profile }: { profile: ProfileId }) {
       <section className="profile-content-section" id="experience" aria-labelledby="experience-heading">
         <SectionHeading id="experience-heading" kicker="THE FULL STORY" title="Scientific practice, shaped into digital tools" detail="Bringing hands-on cryo-EM experience together with practical digital development." />
         <div className="profile-story-columns full-story-columns">
-          <article className="profile-story-card">
-            <p className="section-kicker">SCIENTIFIC PRACTICE</p>
-            <h3>{currentRole.title}</h3>
-            <p>{currentRole.organization} · {currentRole.detail}</p>
-            <ol className="workflow-list">{cryoEmWorkflow.map((step) => <li key={step}>{step}</li>)}</ol>
-            <details className="experience-details">
-              <summary>Explore my responsibilities</summary>
-              <ul>{currentRole.responsibilities?.map((item) => <li key={item}>{item}</li>)}</ul>
-            </details>
-          </article>
-          <article className="profile-story-card">
+          <CryoEmPracticeCard currentRole={currentRole} showOrganization />
+          <article className="profile-story-card digital-development-card">
             <p className="section-kicker">DIGITAL DEVELOPMENT</p>
             <h3>{websiteBuildingStory.title}</h3>
             <p>{websiteBuildingStory.description}</p>
@@ -210,23 +251,10 @@ function CareerSection({ profile }: { profile: ProfileId }) {
         id="experience-heading"
         kicker="PROFESSIONAL EXPERIENCE"
         title="Cryo-EM & facility operations"
-        detail={<><span>Advanced Center for Cryo Electron Microscopy (ACCEM)</span><span>Indian Institute of Science, Bangalore</span></>}
+        detail={<><span className="institution-name">Advanced Center for Cryo Electron Microscopy <span className="institution-acronym">(ACCEM)</span></span><span>Indian Institute of Science, Bangalore</span></>}
       />
       <div className="profile-story-columns scientist-experience-columns">
-        <article className="profile-story-card">
-          <p className="section-kicker">CURRENT ROLE · 3 YEARS</p>
-          <h3>{currentRole.title}</h3>
-          <p>{currentRole.detail}</p>
-          <details className="experience-details">
-            <summary>Explore my responsibilities</summary>
-            <ul>{currentRole.responsibilities?.map((item) => <li key={item}>{item}</li>)}</ul>
-          </details>
-        </article>
-        <article className="profile-story-card">
-          <p className="section-kicker">CRYO-EM WORKFLOW</p>
-          <h3>From sample preparation to data management</h3>
-          <ol className="workflow-list">{cryoEmWorkflow.map((step) => <li key={step}>{step}</li>)}</ol>
-        </article>
+        <CryoEmPracticeCard currentRole={currentRole} showOrganization={false} />
       </div>
       <TeachingTrainingSection />
     </section>
@@ -274,7 +302,7 @@ function PublicationsSection() {
                 )}
               </p>
               <p className="publication-details">{publication.details}</p>
-              <a href={publication.url} target="_blank" rel="noopener noreferrer">Read publication <Icon name="external" /></a>
+              <a className="publication-link" href={publication.url} target="_blank" rel="noopener noreferrer">Read publication <Icon name="external" /></a>
             </article>
           ))}
         </div>
@@ -300,15 +328,12 @@ function EducationSection() {
               <div><dt>Years</dt><dd>{item.years}</dd></div>
               <div><dt>CGPA</dt><dd>{item.gpa}</dd></div>
             </dl>
-          </article>
-        ))}
-      </div>
-      <div className="education-achievements" aria-label="Academic achievements">
-        <p className="section-kicker">ACHIEVEMENTS</p>
-        {educationAchievements.map((achievement) => (
-          <article className="education-achievement" key={achievement.title}>
-            <span className="achievement-mark" aria-hidden="true">★</span>
-            <div><h3>{achievement.title}</h3><p>{achievement.detail}</p></div>
+            {item.title === 'M.Tech in Biotechnology' && educationAchievements.map((achievement) => (
+              <div className="education-medal-badge" key={achievement.title}>
+                <span className="achievement-mark" aria-hidden="true">★</span>
+                <span><strong>{achievement.title}</strong><small>{achievement.detail}</small></span>
+              </div>
+            ))}
           </article>
         ))}
       </div>
@@ -387,53 +412,30 @@ function clearHeroNameGlow(event: ReactPointerEvent<HTMLElement>) {
   event.currentTarget.style.removeProperty('--hero-glow-opacity');
 }
 
-function ProfileSectionTiles({ profile }: { profile: ProfileId }) {
-  const sections = profile === 'scientist'
-    ? [
-        { id: 'experience', title: 'Experience', index: '01', description: 'Cryo-EM practice & facility operations' },
-        { id: 'projects', title: 'Projects', index: '02', description: 'Selected scientific workflows' },
-        { id: 'publications', title: 'Publications', index: '03', description: 'Research contributions' },
-        { id: 'education', title: 'Education', index: '04', description: 'Biotechnology foundations' },
-      ]
-    : profile === 'builder'
-      ? [
-          { id: 'experience', title: 'Experience', index: '01', description: 'Digital systems & workflows' },
-          { id: 'projects', title: 'Websites', index: '02', description: 'Live facility tools' },
-        ]
-      : [
-          { id: 'experience', title: 'Experience', index: '01', description: 'Cryo-EM practice & digital development' },
-          { id: 'projects', title: 'Projects', index: '02', description: 'Research & facility websites' },
-          { id: 'publications', title: 'Publications', index: '03', description: 'Research contributions' },
-          { id: 'education', title: 'Education', index: '04', description: 'Biotechnology foundations' },
-        ];
-
-  return (
-    <nav className="scientist-section-tiles" aria-label={`Explore ${profile} portfolio sections`}>
-      {sections.map((section) => (
-        <a className="scientist-section-tile" href={`#${section.id}`} key={section.id}>
-          <span className="scientist-tile-index">{section.index}</span>
-          <span className="scientist-tile-copy"><strong>{section.title}</strong><span>{section.description}</span></span>
-          <Icon name="arrow" />
-        </a>
-      ))}
-    </nav>
-  );
-}
-
 export default function PortfolioApp() {
   const [screen, setScreen] = useState<Screen>('intro');
   const [selectedProfile, setSelectedProfile] = useState<ProfileId | null>(readStoredProfile);
   const [search, setSearch] = useState('');
   const [activeProject, setActiveProject] = useState<PortfolioProject | null>(null);
+  const [modalLoaded, setModalLoaded] = useState(false);
   const projectTriggerRef = useRef<HTMLButtonElement | null>(null);
   const reduceMotion = useReducedMotion();
   const activeProfile = getProfile(selectedProfile);
+  const { scrollY } = useScroll();
+  const heroPortraitY = useTransform(scrollY, [0, 650], [0, reduceMotion ? 0 : 90]);
+  const heroNameScale = useTransform(scrollY, [0, 650], [1, reduceMotion ? 1 : 0.9]);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const lenis = new Lenis({ autoRaf: true });
+    return () => lenis.destroy();
+  }, [reduceMotion]);
 
   useEffect(() => {
     const trackPointerGlow = (event: PointerEvent) => {
       if (event.pointerType === 'touch' || !(event.target instanceof Element)) return;
       const tile = event.target.closest<HTMLElement>(
-        '.profile-avatar, .scientist-section-tile, .project-card, .moment-card, .toolkit-card, .profile-story-card, .research-project-card, .teaching-training-card, .publication-item, .education-card, .education-achievement',
+        '.profile-avatar, .project-card, .moment-card, .toolkit-card, .profile-story-card, .research-project-card, .teaching-training-card, .publication-item, .education-card',
       );
       if (!tile) return;
 
@@ -470,12 +472,9 @@ export default function PortfolioApp() {
         .includes(term),
     );
   }, [orderedProjects, search]);
-  const isFontComparison = window.location.hash === '#font-comparison';
-
-  if (isFontComparison) return <FontComparison />;
-
   const openProject = (project: PortfolioProject, trigger: HTMLButtonElement) => {
     projectTriggerRef.current = trigger;
+    setModalLoaded(true);
     setActiveProject(project);
   };
   const closeProject = () => setActiveProject(null);
@@ -489,19 +488,6 @@ export default function PortfolioApp() {
     }
     setScreen('home');
   };
-  if (screen !== 'home') {
-    return (
-      <ExperienceTransition
-        screen={screen}
-        onEnter={beginProfileSelect}
-        profiles={profiles}
-        selected={selectedProfile}
-        onSelect={selectProfile}
-        onBack={selectedProfile ? () => setScreen('home') : undefined}
-      />
-    );
-  }
-
   const profileIntro = {
     scientist: profileContent.scientist.intro,
     builder: profileContent.builder.intro,
@@ -518,7 +504,16 @@ export default function PortfolioApp() {
       ];
 
   return (
-    <div className={`portfolio-app theme-${activeProfile.id}`}>
+    <AnimatePresence mode="wait" initial={false}>
+      {screen === 'home' ? (
+    <motion.div
+      key={`portfolio-${activeProfile.id}`}
+      className={`portfolio-app theme-${activeProfile.id}`}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: reduceMotion ? 0 : -12 }}
+      transition={{ duration: reduceMotion ? 0.01 : 0.32, ease: [0.22, 1, 0.36, 1] }}
+    >
       <SiteHeader
         profile={activeProfile}
         navigation={navigation}
@@ -543,13 +538,14 @@ export default function PortfolioApp() {
             className="hero-portrait"
             src="/assets/drose-shane-cryo-em-specialist-portrait-warm.webp"
             alt="Portrait of Drose Shane"
+            style={{ y: heroPortraitY }}
             initial={{ opacity: 0, x: reduceMotion ? 0 : 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: reduceMotion ? 0.01 : 0.42, delay: reduceMotion ? 0 : 0.04, ease: [0.22, 1, 0.36, 1] }}
           />
           <div className="hero-content">
             <p className="profile-context">{activeProfile.descriptor}</p>
-            <h1 className="hero-name" id="hero-name">
+            <motion.h1 className="hero-name" id="hero-name" style={{ scale: heroNameScale }}>
               <span
                 className="hero-name-word hero-name-first"
                 onPointerMove={updateHeroNameGlow}
@@ -564,20 +560,16 @@ export default function PortfolioApp() {
               >
                 Shane<span className="hero-name-glow" aria-hidden="true">Shane</span>
               </em>
-            </h1>
+            </motion.h1>
             <h2 className="hero-tagline">{activeProfile.id === 'scientist' ? <>CRYO-EM SCIENCE<br />& FACILITY PRACTICE.</> : activeProfile.id === 'builder' ? <>DIGITAL SYSTEMS<br />FOR SCIENTIFIC WORK.</> : <>FROM MOLECULAR SCIENCE<br />TO DIGITAL SOLUTIONS.</>}</h2>
             <p className="hero-description">{profileIntro}</p>
             <div className="hero-cta">
               <a className="cta cta-primary" href={activeProfile.id === 'builder' ? '#projects' : '#experience'}><Icon name="play" />{activeProfile.id === 'builder' ? 'Explore websites' : 'Explore experience'}</a>
-              <a className="cta cta-glass" href={activeProfile.id === 'scientist' ? '#education' : '#projects'}><Icon name="arrow" />{activeProfile.id === 'scientist' ? 'Education' : 'Selected projects'}</a>
+              <a className="cta cta-glass" href={activeProfile.id === 'scientist' ? '#publications' : '#projects'}><Icon name="arrow" />{activeProfile.id === 'scientist' ? 'Publications' : 'Selected projects'}</a>
             </div>
-            <p className="hero-proof"><span>{activeProfile.id === 'builder' ? '4 LIVE SYSTEMS' : '3 YEARS'}</span> {activeProfile.id === 'builder' ? 'FACILITY WEBSITES & DIGITAL WORKFLOWS' : 'CRYO-EM & FACILITY OPERATIONS'} <i /> INDIAN INSTITUTE OF SCIENCE</p>
+            <p className="hero-proof">Indian Institute of Science · Bengaluru</p>
           </div>
-          {activeProfile.id !== 'scientist' && <a className="hero-scroll" href="#experience"><span>EXPLORE THE STORY</span><i /></a>}
-          <div className="hero-side-index" aria-hidden="true"><span>FIELD NOTE</span><b>01</b><i /></div>
         </motion.section>
-
-        <ProfileSectionTiles profile={activeProfile.id} />
 
         <div className={`catalogue-wrap profile-page profile-page-${activeProfile.id}`}>
           <CareerSection profile={activeProfile.id} />
@@ -593,11 +585,34 @@ export default function PortfolioApp() {
         <a href="#home" className="footer-contact">Back to top <Icon name="arrow" /></a>
         <span className="footer-credit">© {new Date().getFullYear()} Drose Ignatious Shane. All rights reserved.</span>
       </footer>
-      <ProjectModal
-        project={activeProject}
-        onClose={closeProject}
-        returnFocusRef={projectTriggerRef}
-      />
-    </div>
+      {modalLoaded && (
+        <Suspense fallback={activeProject ? <div className="modal-loading-layer" role="status">Loading project details…</div> : null}>
+          <LazyProjectModal
+            project={activeProject}
+            onClose={closeProject}
+            returnFocusRef={projectTriggerRef}
+          />
+        </Suspense>
+      )}
+    </motion.div>
+      ) : (
+        <motion.div
+          key={`screen-${screen}`}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: reduceMotion ? 0 : -12 }}
+          transition={{ duration: reduceMotion ? 0.01 : 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <ExperienceTransition
+            screen={screen}
+            onEnter={beginProfileSelect}
+            profiles={profiles}
+            selected={selectedProfile}
+            onSelect={selectProfile}
+            onBack={selectedProfile ? () => setScreen('home') : undefined}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
