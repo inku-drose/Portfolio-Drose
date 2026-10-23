@@ -163,17 +163,20 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
         </motion.h1>
       </div>
       {introStage === 'title' && (
-        <motion.div
+        <motion.button
           className="intro-scroll-hint"
+          type="button"
           aria-label="Scroll down to reveal the portrait"
-          initial={{ opacity: 0, y: reduceMotion ? 0 : -4 }}
+          onClick={() => progress.set(1)}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: reduceMotion ? 0.01 : 0.35 }}
+          transition={{ delay: reduceMotion ? 0 : 0.6, duration: reduceMotion ? 0.01 : 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span>SCROLL DOWN</span>
-          <span className="intro-scroll-arrow" aria-hidden="true">↓</span>
-        </motion.div>
+          <span className="intro-scroll-label">SCROLL DOWN</span>
+          <span className="intro-scroll-mouse" aria-hidden="true"><i /></span>
+          <span className="intro-scroll-chevrons" aria-hidden="true"><i /><i /><i /></span>
+        </motion.button>
       )}
       {showAction && (
         <motion.div
