@@ -175,7 +175,6 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
         >
           <span className="intro-scroll-label">SCROLL DOWN</span>
           <span className="intro-scroll-mouse" aria-hidden="true"><i /></span>
-          <span className="intro-scroll-chevrons" aria-hidden="true"><i /><i /><i /></span>
         </motion.button>
       )}
       {showAction && (
