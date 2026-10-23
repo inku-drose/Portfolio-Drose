@@ -50,7 +50,7 @@ No technology stack, impact metrics, or personal contact address is invented. Fa
 - The Scientist hero text is positioned lower over the portrait, and its section navigation appears as rectangular clickable tiles below the hero. Builder and Full Story also use profile-specific rectangular section tiles, alongside their top navigation.
 - Teaching, training, and volunteering contributions appear beneath professional experience in Scientist and Full Story.
 - Selecting The Scientist, The Builder, or The Full Story applies a smoothly transitioning electric-blue, violet, or green theme across the portfolio.
-- The intro opens on the name alone with an animated “Scroll down” cue. Scroll or swipe to reveal the centered, softly blended portrait; the cue disappears as the uppercase name scales down and settles at the top. The “My Portfolio” button appears automatically 1.5 seconds after the portrait is fully revealed.
+- The intro opens on the name alone with an animated “Scroll up” cue (a glowing oval that drifts upward, matching the trackpad and touch gesture). Scroll or swipe up to reveal the centered, softly blended portrait; the cue disappears as the uppercase name scales down and settles at the top. The “My Portfolio” button appears automatically 1.5 seconds after the portrait is fully revealed.
 - Search filters all four projects by their titles, categories, descriptions, features, and tags.
 - Project details include the operational need, supported workflows, tags, and the provided live website links.
 - Publication entries, including DOI links, are data-driven in `src/data/portfolio.ts`.

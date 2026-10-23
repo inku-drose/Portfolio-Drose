@@ -108,7 +108,7 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
     <motion.section
       ref={screenRef}
       className={`intro-screen ${introStage === 'title' ? 'is-title-stage' : 'is-reveal-stage'}`}
-      aria-label="Opening title. Scroll or swipe down to reveal your portrait."
+      aria-label="Opening title. Scroll or swipe up to reveal your portrait."
       tabIndex={0}
       onKeyDown={(event) => {
         if (event.key === ' ' && event.target instanceof HTMLButtonElement) return;
@@ -166,14 +166,14 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
         <motion.button
           className="intro-scroll-hint"
           type="button"
-          aria-label="Scroll down to reveal the portrait"
+          aria-label="Scroll up to reveal the portrait"
           onClick={() => progress.set(1)}
           initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ delay: reduceMotion ? 0 : 0.6, duration: reduceMotion ? 0.01 : 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="intro-scroll-label">SCROLL DOWN</span>
+          <span className="intro-scroll-label">SCROLL UP</span>
           <span className="intro-scroll-mouse" aria-hidden="true"><i /></span>
         </motion.button>
       )}
