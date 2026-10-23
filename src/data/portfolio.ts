@@ -4,7 +4,7 @@ export interface Profile {
   id: ProfileId;
   name: string;
   descriptor: string;
-  description: string;
+  bestFor: string;
   image: string;
   imageAlt: string;
 }
@@ -14,7 +14,7 @@ export const profiles: Profile[] = [
     id: 'scientist',
     name: 'The Biologist',
     descriptor: 'CRYO-EM · STRUCTURE · FACILITY OPERATIONS',
-    description: 'A closer look at the science, instruments, and facility work.',
+    bestFor: 'For research collaborators',
     image: '/assets/drose-shane-cryo-em-specialist-profile.webp',
     imageAlt: 'Cryo-electron microscope and a blue molecular structure',
   },
@@ -22,7 +22,7 @@ export const profiles: Profile[] = [
     id: 'builder',
     name: 'The Web Developer',
     descriptor: 'WEB APPS · DIGITAL SYSTEMS · AUTOMATION',
-    description: 'Explore practical tools built around real scientific workflows.',
+    bestFor: 'For teams who need digital tools',
     image: '/assets/drose-shane-digital-systems-builder-profile.webp',
     imageAlt: 'Laptop displaying digital dashboards and workflow tools',
   },
@@ -30,7 +30,7 @@ export const profiles: Profile[] = [
     id: 'full',
     name: 'The Full Story',
     descriptor: 'SCIENCE × DIGITAL × IMPACT',
-    description: 'The complete story, from molecular science to digital solutions.',
+    bestFor: 'For the complete picture',
     image: '/assets/drose-shane-full-story-profile.webp',
     imageAlt: 'Molecular science connected to digital data systems',
   },
@@ -351,14 +351,28 @@ export const educationAchievements = [
   },
 ];
 
-export const cryoEmWorkflow = [
-  'Sample preparation',
-  'Grid freezing',
-  'Single-particle acquisition',
-  'Cryo-electron tomography',
-  'Grid storage',
-  'Data management',
-];
+export const cryoEmPractice = {
+  samplePreparation: [
+    {
+      category: 'Negative-stain TEM (NS-TEM)',
+      details: ['Talos L120C'],
+    },
+    {
+      category: 'Plunge freezing',
+      details: ['Vitrobot Mark 4', 'Leica GP2', 'Vitriflex'],
+    },
+  ],
+  dataCollection: [
+    {
+      category: 'Acquisition software',
+      details: ['Latitude', 'EPU'],
+    },
+    {
+      category: 'Data acquisition methods',
+      details: ['Single-particle acquisition (SPA)', 'Cryo-electron tomography (cryo-ET)'],
+    },
+  ],
+};
 
 export const websiteBuildingStory = {
   title: 'Making demanding work smarter',

@@ -24,9 +24,10 @@ export function Icon({ name }: IconProps) {
 interface ArtworkProps {
   artwork: PortfolioProject['artwork'];
   compact?: boolean;
+  layoutId?: string;
 }
 
-export function ProjectArtwork({ artwork, compact = false }: ArtworkProps) {
+export function ProjectArtwork({ artwork, compact = false, layoutId }: ArtworkProps) {
   const suppliedCovers: Partial<Record<PortfolioProject['artwork'], string>> = {
     accem: '/assets/project-covers/drose-shane-accem-facility-portal-cover.webp',
     tem: '/assets/project-covers/drose-shane-tem-booking-terminal-cover.webp',
@@ -43,10 +44,10 @@ export function ProjectArtwork({ artwork, compact = false }: ArtworkProps) {
   const isSuppliedCover = artwork in suppliedCovers;
 
   return (
-    <div className={`project-art art-${artwork}${compact ? ' is-compact' : ''}${isSuppliedCover ? ' has-full-cover-image' : ''}`} aria-hidden="true">
+    <motion.div layoutId={layoutId} className={`project-art art-${artwork}${compact ? ' is-compact' : ''}${isSuppliedCover ? ' has-full-cover-image' : ''}`} aria-hidden="true">
       {isSuppliedCover && <img className="project-art-backdrop" src={coverImage} alt="" loading={compact ? 'lazy' : 'eager'} decoding="async" />}
       <img className="project-art-cover" src={coverImage} alt="" loading={compact ? 'lazy' : 'eager'} decoding="async" />
-    </div>
+    </motion.div>
   );
 }
 
@@ -64,8 +65,8 @@ export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
       type="button"
       onClick={(event) => onOpen(project, event.currentTarget)}
       aria-label={`View ${project.title} project details`}
-      initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: reduceMotion ? 0.01 : 0.3, delay: reduceMotion ? 0 : (index % 4) * 0.035 }}
       whileHover={reduceMotion ? { scale: 1.02 } : { y: -7, scale: 1.04 }}
@@ -166,88 +167,6 @@ export function MomentRail({ moments }: MomentRailProps) {
   );
 }
 
-interface ProjectModalProps {
-  project: PortfolioProject | null;
-  onClose: () => void;
-  returnFocusRef: MutableRefObject<HTMLButtonElement | null>;
-}
-
-export function ProjectModal({ project, onClose, returnFocusRef }: ProjectModalProps) {
-  const closeButton = useRef<HTMLButtonElement>(null);
-  const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (!project) {
-      returnFocusRef.current?.focus();
-      return;
-    }
-    closeButton.current?.focus();
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = previousOverflow; };
-  }, [project, returnFocusRef]);
-
-  useEffect(() => {
-    if (!project) return;
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-      if (event.key === 'Tab') {
-        const modal = document.querySelector<HTMLElement>('.project-modal');
-        if (!modal) return;
-        const focusable = [...modal.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')];
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last?.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first?.focus();
-        }
-      }
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [project, onClose]);
-
-  return (
-    <AnimatePresence>
-      {project && (
-        <motion.div className="modal-layer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0.01 : 0.16 }}>
-          <button className="modal-backdrop" type="button" aria-label="Close project details" onClick={onClose} />
-          <motion.article
-            className="project-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="project-modal-title"
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 14, scale: reduceMotion ? 1 : 0.985 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: reduceMotion ? 0 : 12, scale: reduceMotion ? 1 : 0.99 }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.24, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <ProjectArtwork artwork={project.artwork} />
-            <button className="modal-close" ref={closeButton} type="button" onClick={onClose} aria-label="Close project details"><Icon name="close" /></button>
-            <div className="modal-body">
-              <p className="modal-kicker">{project.eyebrow}</p>
-              <h2 id="project-modal-title">{project.title}</h2>
-              <p className="modal-synopsis">{project.synopsis}</p>
-              <div className="modal-actions">
-                <a className="action-primary" href={project.liveUrl} target="_blank" rel="noopener noreferrer"><Icon name="external" /> Open live website</a>
-              </div>
-              <div className="project-facts">
-                <div><h3>THE OPERATIONAL NEED</h3><p>{project.problem}</p></div>
-                <div><h3>WHAT IT SUPPORTS</h3><ul>{project.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></div>
-                <div><h3>FACILITY IMPACT</h3><p>{project.impact}</p></div>
-              </div>
-              <div className="project-tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-            </div>
-          </motion.article>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
 interface HeaderProps {
   profile: Profile;
   navigation: { label: string; href: string }[];
@@ -305,7 +224,7 @@ export function SiteHeader({ profile, navigation, showSearch = true, search, onS
 
   return (
     <header className="site-header">
-      <a className="brand-lockup" href="#home" aria-label="Drose Shane home">
+      <a className="brand-lockup" href="/" aria-label="Drose Shane home">
         <img className="brand-logo" src="/assets/drose-shane-logo-blended.webp" alt="" />
       </a>
       <button className="mobile-menu-toggle" type="button" aria-expanded={mobileOpen} aria-controls="primary-navigation" aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'} onClick={() => setMobileOpen((open) => !open)}>{mobileOpen ? '×' : '☰'}</button>

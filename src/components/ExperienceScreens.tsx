@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useMotionValue, useMotionValueEvent, useReducedMotion, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import type { Profile, ProfileId } from '../data/portfolio';
 
 interface IntroScreenProps {
@@ -53,6 +53,16 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
       setShowAction(false);
     }
   });
+
+  useEffect(() => {
+    const handleSkipKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Enter' && event.key !== 'Escape') return;
+      event.preventDefault();
+      onEnter();
+    };
+    window.addEventListener('keydown', handleSkipKey);
+    return () => window.removeEventListener('keydown', handleSkipKey);
+  }, [onEnter]);
 
   useEffect(() => {
     const screen = screenRef.current;
@@ -173,8 +183,8 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
           exit={{ opacity: 0 }}
           transition={{ delay: reduceMotion ? 0 : 0.6, duration: reduceMotion ? 0.01 : 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="intro-scroll-label">SCROLL UP</span>
           <span className="intro-scroll-mouse" aria-hidden="true"><i /></span>
+          <span className="intro-scroll-label">SCROLL UP</span>
         </motion.button>
       )}
       {showAction && (
@@ -189,6 +199,7 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
           </button>
         </motion.div>
       )}
+      <button className="skip-intro" type="button" onClick={onEnter}>Skip intro <span aria-hidden="true">→</span></button>
     </motion.section>
   );
 }
@@ -207,7 +218,6 @@ function ProfileArtwork({ profile }: { profile: Profile }) {
       src={profile.image}
       alt={profile.imageAlt}
       decoding="async"
-      fetchPriority={profile.id === 'scientist' ? 'high' : 'low'}
     />
   );
 }
@@ -215,6 +225,7 @@ function ProfileArtwork({ profile }: { profile: Profile }) {
 export function ProfileScreen({ profiles, selected, onSelect, onBack }: ProfileScreenProps) {
   const reduceMotion = useReducedMotion();
   const firstChoice = useRef<HTMLButtonElement>(null);
+  const [hoveredProfile, setHoveredProfile] = useState<ProfileId | null>(null);
 
   useEffect(() => {
     firstChoice.current?.focus();
@@ -230,15 +241,12 @@ export function ProfileScreen({ profiles, selected, onSelect, onBack }: ProfileS
       transition={{ duration: reduceMotion ? 0.01 : 0.36, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="profile-screen-top">
-        <a className="brand-lockup" href="#home" aria-label="Drose Shane">
-          <img className="brand-logo" src="/assets/drose-shane-logo-blended.webp" alt="" />
-        </a>
         {onBack && <button className="text-button" type="button" onClick={onBack}>← Back to portfolio</button>}
       </div>
       <div className="profile-picker">
         <h1 id="profile-heading">Explore <em>my world</em></h1>
         <p className="profile-explainer">From molecular science to digital solutions. Choose a journey to discover my work, expertise, and ideas.</p>
-        <div className="profile-options">
+        <div className={`profile-options${hoveredProfile ? ' has-hovered-profile' : ''}`}>
           {profiles.map((profile, index) => (
             <motion.button
               className={`profile-choice profile-${profile.id}${selected === profile.id ? ' is-selected' : ''}`}
@@ -246,26 +254,59 @@ export function ProfileScreen({ profiles, selected, onSelect, onBack }: ProfileS
               ref={index === 0 ? firstChoice : undefined}
               type="button"
               onClick={() => onSelect(profile.id)}
+              onPointerEnter={(event: ReactPointerEvent<HTMLButtonElement>) => {
+                if (event.pointerType === 'mouse') setHoveredProfile(profile.id);
+              }}
+              onPointerMove={(event: ReactPointerEvent<HTMLButtonElement>) => {
+                if (reduceMotion || event.pointerType !== 'mouse') return;
+                const bounds = event.currentTarget.getBoundingClientRect();
+                const card = event.currentTarget.querySelector<HTMLElement>('.profile-avatar');
+                if (!card) return;
+                const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+                const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+                card.style.setProperty('--tilt-x', `${-y * 4}deg`);
+                card.style.setProperty('--tilt-y', `${x * 4}deg`);
+              }}
+              onPointerLeave={(event: ReactPointerEvent<HTMLButtonElement>) => {
+                setHoveredProfile(null);
+                const card = event.currentTarget.querySelector<HTMLElement>('.profile-avatar');
+                card?.style.removeProperty('--tilt-x');
+                card?.style.removeProperty('--tilt-y');
+              }}
               whileTap={reduceMotion ? undefined : { scale: 0.985 }}
+              animate={{
+                opacity: hoveredProfile && hoveredProfile !== profile.id ? 0.56 : 1,
+                y: hoveredProfile === profile.id ? -7 : selected === profile.id ? -2 : 0,
+                scale: hoveredProfile === profile.id ? 1.055 : selected === profile.id ? 1.025 : 1,
+              }}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: reduceMotion ? 0 : 0.04 + index * 0.045, duration: reduceMotion ? 0.01 : 0.3 }}
+              transition={reduceMotion
+                ? { duration: 0.01 }
+                : hoveredProfile
+                  ? {
+                    opacity: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+                    y: { type: 'spring', stiffness: 320, damping: 13, mass: 0.7 },
+                    scale: { type: 'spring', stiffness: 320, damping: 13, mass: 0.7 },
+                  }
+                  : {
+                    delay: 0.04 + index * 0.045,
+                    duration: 0.5,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
             >
               <span className="profile-avatar">
                 <ProfileArtwork profile={profile} />
                 <span className="profile-card-shade" />
                 <span className="profile-card-content">
-                  <span className="profile-index">0{index + 1}<i /></span>
                   <strong><span>The</span> <em>{profile.name.replace(/^The /, '')}</em></strong>
                   <span className="profile-descriptor">{profile.descriptor}</span>
-                  <span className="profile-description">{profile.description}</span>
+                  <span className="profile-best-for">{profile.bestFor}</span>
                 </span>
                 <span className="profile-arrow" aria-hidden="true">→</span>
               </span>
             </motion.button>
           ))}
         </div>
-        <p className="profile-footer">YOUR EXPERIENCE, YOUR WAY <span>·</span> PRESS A PROFILE TO BEGIN</p>
       </div>
       <p className="profile-screen-footer">© {new Date().getFullYear()} Drose Ignatious Shane. All rights reserved.</p>
     </motion.section>
