@@ -67,7 +67,7 @@ export const projects: PortfolioProject[] = [
       'Grid inventory tracking',
     ],
     impact:
-      'Brings booking, billing, and inventory into one system for 100+ registered users, giving the facility real-time visibility into usage and revenue.',
+      'Brings booking, billing, and inventory into one system for 180+ registered users, giving the facility real-time visibility into usage and revenue.',
     tags: [
       'Facility scheduling',
       'Grid inventory',
@@ -387,7 +387,40 @@ export const cryoEmPractice = {
 export const websiteBuildingStory = {
   title: 'Why I build tools',
   description:
-    'Running a shared facility showed me how much time goes into scheduling, billing, and record-keeping that software could handle. I started building tools to remove that friction, first for my own facility and now for others facing the same problems.',
+    'Running a shared facility showed me how much time goes into scheduling, billing, and record-keeping that software could handle. I started building tools to remove that friction for my own facility, and that work now continues as Tekvara Studio, building websites and web apps for clients of every size.',
+};
+
+export const studio = {
+  name: 'Tekvara Studio',
+  url: 'https://tekvara-studio.onrender.com/',
+  estimateUrl: 'https://tekvara-studio.onrender.com/#estimate',
+  whatsappUrl: 'https://wa.me/917826032427',
+};
+
+export interface HighlightStat {
+  value: string;
+  label: string;
+}
+
+export const highlightStats: Record<ProfileId, HighlightStat[]> = {
+  scientist: [
+    { value: '85+', label: 'EMDB-deposited structures supported' },
+    { value: '2.8 Å', label: 'Best resolution from facility data' },
+    { value: '30+', label: 'Active academic and industry users' },
+    { value: '50+', label: 'Users trained in cryo-EM workflows' },
+  ],
+  builder: [
+    { value: '4', label: 'Live systems in daily use at IISc facilities' },
+    { value: '180+', label: 'Registered users on the ACCEM portal' },
+    { value: '₹4,999', label: 'Websites from, with a fixed quote first' },
+    { value: '30 days', label: 'Free support after every launch' },
+  ],
+  full: [
+    { value: '85+', label: 'EMDB-deposited structures supported' },
+    { value: '2.8 Å', label: 'Best resolution from facility data' },
+    { value: '4', label: 'Live web systems built for IISc facilities' },
+    { value: '180+', label: 'Registered users on the ACCEM portal' },
+  ],
 };
 
 export interface ServicePackage {
@@ -506,14 +539,14 @@ export const profileContent = {
   },
   builder: {
     intro:
-      'I build portfolios, business websites, online stores, and custom web apps, including booking and billing systems now running in research facilities at IISc.',
+      'As founder of Tekvara Studio, I build portfolios, business websites, online stores, and custom web apps, including booking and billing systems running in research facilities at IISc.',
     projectTitle: 'Live websites & digital projects',
     projectKicker: 'TOOLS BUILT FROM FACILITY NEEDS',
     projectNote: 'Live facility websites and booking systems.',
   },
   full: {
     intro:
-      'A biotechnologist by training and a cryo-EM specialist by profession. I run facility operations at IISc and build the digital systems that help shared facilities run smoothly.',
+      'A biotechnologist by training and a cryo-EM specialist by profession. I run facility operations at IISc and, through Tekvara Studio, build the websites and web apps that help people and facilities work better.',
     projectTitle: 'Research & digital projects',
     projectKicker: 'SCIENCE MEETS DIGITAL PRACTICE',
     projectNote: 'Research projects and facility websites built around real scientific workflows.',

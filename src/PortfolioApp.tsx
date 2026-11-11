@@ -13,6 +13,8 @@ import {
   projects,
   researchProjects,
   servicePackages,
+  highlightStats,
+  studio,
   teachingTrainingVolunteering,
   toolkit,
   websiteBuildingStory,
@@ -51,6 +53,16 @@ function readStoredProfile(): ProfileId | null {
   try {
     const stored = window.sessionStorage.getItem(PROFILE_STORAGE_KEY);
     return profiles.some((profile) => profile.id === stored) ? (stored as ProfileId) : null;
+  } catch {
+    return null;
+  }
+}
+
+// A link such as /?view=builder opens that profile directly, skipping the intro.
+function readLinkedProfile(): ProfileId | null {
+  try {
+    const view = new URLSearchParams(window.location.search).get('view');
+    return profiles.some((profile) => profile.id === view) ? (view as ProfileId) : null;
   } catch {
     return null;
   }
@@ -195,7 +207,7 @@ function CareerSection({ profile }: { profile: ProfileId }) {
     );
     return (
       <section className="profile-content-section" id="experience" aria-labelledby="experience-heading">
-        <SectionHeading id="experience-heading" kicker="EXPERIENCE · DIGITAL SYSTEMS" title="Turning facility friction into working tools" detail="Software built around how scientific facilities actually work." />
+        <SectionHeading id="experience-heading" kicker="MY APPROACH" title="Turning facility friction into working tools" detail="Software built around how scientific facilities actually work." />
         <div className="profile-story-columns">
           <article className="profile-story-card">
             <p className="section-kicker">THE STARTING POINT</p>
@@ -283,14 +295,27 @@ function TeachingTrainingSection() {
   );
 }
 
+function HighlightStrip({ profile }: { profile: ProfileId }) {
+  return (
+    <section className="highlight-strip" aria-label="Highlights">
+      {highlightStats[profile].map((stat) => (
+        <div className="highlight-stat" key={stat.label}>
+          <strong>{stat.value}</strong>
+          <span>{stat.label}</span>
+        </div>
+      ))}
+    </section>
+  );
+}
+
 function PricingSection() {
   return (
     <section className="profile-content-section pricing-section" id="pricing" aria-labelledby="pricing-heading">
       <SectionHeading
         id="pricing-heading"
-        kicker="SERVICES & PRICING"
+        kicker="TEKVARA STUDIO · SERVICES & PRICING"
         title="Websites, stores, and web apps"
-        detail="Starting prices in INR. You get a fixed quote before any work begins."
+        detail={<>Built through <a className="inline-link" href={studio.url} target="_blank" rel="noopener noreferrer">Tekvara Studio</a>, my web studio. Starting prices in INR, with a fixed quote before any work begins.</>}
       />
       <div className="pricing-grid">
         {servicePackages.map((item) => (
@@ -305,10 +330,11 @@ function PricingSection() {
         ))}
       </div>
       <div className="pricing-footer">
-        <p>Every project includes 30 days of free support. Care plans start at ₹499 a month, and add-ons such as payments, a blog, or billing start at ₹1,499. You own the code and data.</p>
+        <p>Every project includes 30 days of free support. Care plans start at ₹499 a month, and add-ons such as payments, a blog, or billing start at ₹1,499. You own the code and data. Build your own estimate on the Tekvara Studio site.</p>
         <div className="pricing-actions">
-          <a className="closing-link closing-link-primary" href="mailto:ignatious9894@gmail.com?subject=Website%20quote%20request">Get a free quote <Icon name="arrow" /></a>
-          <a className="closing-link" href="/rate-card.html" target="_blank" rel="noopener noreferrer">Full rate card <Icon name="external" /></a>
+          <a className="closing-link closing-link-primary" href={studio.estimateUrl} target="_blank" rel="noopener noreferrer">Estimate your cost <Icon name="external" /></a>
+          <a className="closing-link" href={studio.whatsappUrl} target="_blank" rel="noopener noreferrer">Chat on WhatsApp <Icon name="external" /></a>
+          <a className="closing-link" href={studio.url} target="_blank" rel="noopener noreferrer">Visit Tekvara Studio <Icon name="external" /></a>
         </div>
       </div>
     </section>
@@ -377,7 +403,7 @@ function ClosingSection({ profile }: { profile: Profile }) {
   const closingLine = profile.id === 'scientist'
     ? 'Open to research collaborations and cryo-EM projects. Let’s talk.'
     : profile.id === 'builder'
-      ? 'Need a booking, billing, or inventory system for your facility? Let’s talk.'
+      ? 'Need a website, an online store, or a custom web app? Let’s talk.'
       : 'From scientific discovery to digital solutions: let’s build what comes next.';
 
   const updateClosingTextGlow = (event: ReactPointerEvent<HTMLHeadingElement>) => {
@@ -417,6 +443,16 @@ function ClosingSection({ profile }: { profile: Profile }) {
               ORCID <Icon name="external" />
             </a>
           )}
+          {profile.id !== 'scientist' && (
+            <a className="closing-link" href={studio.url} target="_blank" rel="noopener noreferrer">
+              Tekvara Studio <Icon name="external" />
+            </a>
+          )}
+          {profile.id === 'builder' && (
+            <a className="closing-link" href={studio.whatsappUrl} target="_blank" rel="noopener noreferrer">
+              WhatsApp <Icon name="external" />
+            </a>
+          )}
           <a className="closing-link" href="/drose-shane-resume.pdf" target="_blank" rel="noopener noreferrer">
             Resume <Icon name="external" />
           </a>
@@ -440,8 +476,8 @@ function clearHeroNameGlow(event: ReactPointerEvent<HTMLElement>) {
 }
 
 export default function PortfolioApp() {
-  const [screen, setScreen] = useState<Screen>('intro');
-  const [selectedProfile, setSelectedProfile] = useState<ProfileId | null>(readStoredProfile);
+  const [screen, setScreen] = useState<Screen>(() => (readLinkedProfile() ? 'home' : 'intro'));
+  const [selectedProfile, setSelectedProfile] = useState<ProfileId | null>(() => readLinkedProfile() ?? readStoredProfile());
   const [search, setSearch] = useState('');
   const [activeProject, setActiveProject] = useState<PortfolioProject | null>(null);
   const [modalLoaded, setModalLoaded] = useState(false);
@@ -521,7 +557,13 @@ export default function PortfolioApp() {
     full: profileContent.full.intro,
   }[activeProfile.id];
   const navigation = activeProfile.id === 'builder'
-    ? [{ label: 'Home', href: '#home' }, { label: 'Experience', href: '#experience' }, { label: 'Websites', href: '#projects' }, { label: 'Pricing', href: '#pricing' }]
+    ? [
+        { label: 'Home', href: '#home' },
+        { label: 'Work', href: '#projects' },
+        { label: 'Approach', href: '#experience' },
+        { label: 'Pricing', href: '#pricing' },
+        { label: 'Contact', href: '#contact' },
+      ]
     : [
         { label: 'Home', href: '#home' },
         { label: 'Experience', href: '#experience' },
@@ -529,7 +571,13 @@ export default function PortfolioApp() {
         ...(activeProfile.id === 'full' ? [{ label: 'Pricing', href: '#pricing' }] : []),
         { label: 'Publications', href: '#publications' },
         { label: 'Education', href: '#education' },
+        { label: 'Contact', href: '#contact' },
       ];
+  const heroProof = activeProfile.id === 'builder'
+    ? 'Founder, Tekvara Studio · Bengaluru'
+    : activeProfile.id === 'full'
+      ? 'Indian Institute of Science · Founder, Tekvara Studio'
+      : 'Indian Institute of Science · Bengaluru';
 
   return (
     <AnimatePresence mode="wait" initial={false}>
@@ -595,13 +643,23 @@ export default function PortfolioApp() {
               <a className="cta cta-primary" href={activeProfile.id === 'builder' ? '#projects' : '#experience'}><Icon name="play" />{activeProfile.id === 'builder' ? 'View live projects' : 'Explore experience'}</a>
               <a className="cta cta-glass" href={activeProfile.id === 'scientist' ? '#publications' : activeProfile.id === 'builder' ? '#pricing' : '#projects'}><Icon name="arrow" />{activeProfile.id === 'scientist' ? 'Publications' : activeProfile.id === 'builder' ? 'See pricing' : 'Selected projects'}</a>
             </div>
-            <p className="hero-proof">Indian Institute of Science · Bengaluru</p>
+            <p className="hero-proof">{heroProof}</p>
           </div>
         </motion.section>
 
         <div className={`catalogue-wrap profile-page profile-page-${activeProfile.id}`}>
-          <CareerSection profile={activeProfile.id} />
-          <ProjectSection profile={activeProfile.id} search={search} items={filteredProjects} onOpen={openProject} />
+          <HighlightStrip profile={activeProfile.id} />
+          {activeProfile.id === 'builder' ? (
+            <>
+              <ProjectSection profile={activeProfile.id} search={search} items={filteredProjects} onOpen={openProject} />
+              <CareerSection profile={activeProfile.id} />
+            </>
+          ) : (
+            <>
+              <CareerSection profile={activeProfile.id} />
+              <ProjectSection profile={activeProfile.id} search={search} items={filteredProjects} onOpen={openProject} />
+            </>
+          )}
           {activeProfile.id !== 'scientist' && <PricingSection />}
           {activeProfile.id !== 'builder' && <PublicationsSection />}
           {activeProfile.id !== 'builder' && <EducationSection />}
