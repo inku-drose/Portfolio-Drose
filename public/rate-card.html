@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0b16">
+<link rel="icon" type="image/webp" href="/assets/drose-shane-logo-blended.webp">
+<title>Drose Shane Rate Card</title>
+<meta name="description" content="Website, e-commerce and web app development rates by Drose Shane. Transparent starting prices in INR.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap">
+<style>
+/* Layout: a price list read top to bottom — hero, filterable package grid, add-on tariff, care plans, steps, terms, contact. */
+:root {
+  --bg: #f5f4fa;
+  --surface: #ffffff;
+  --fg: #171428;
+  --muted: #5c5772;
+  --line: #e2dfee;
+  --accent: #5f35e8;
+  --accent-soft: #eee8ff;
+  --accent-fg: #ffffff;
+  --good: #0c7f5c;
+  --display: "Sora", "Segoe UI", Arial, sans-serif;
+  --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0b16; --surface: #161227; --fg: #f1eefb; --muted: #a8a1c2; --line: #2b2545;
+    --accent: #a98bff; --accent-soft: #231c3e; --accent-fg: #130e24; --good: #45d3a6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d0b16; --surface: #161227; --fg: #f1eefb; --muted: #a8a1c2; --line: #2b2545;
+  --accent: #a98bff; --accent-soft: #231c3e; --accent-fg: #130e24; --good: #45d3a6;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0; }
+.price { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* Hero */
+.hero { padding-block: clamp(40px, 8vw, 88px) clamp(28px, 5vw, 48px); display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); align-items: end; }
+.hero h1 { font-size: clamp(34px, 5.4vw, 60px); line-height: 1.05; margin-top: 14px; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .lead { max-width: 56ch; color: var(--muted); font-size: 18px; margin: 18px 0 0; }
+.ticket { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; display: grid; gap: 16px; }
+.ticket-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px dashed var(--line); padding-bottom: 14px; }
+.ticket-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.ticket-row span { color: var(--muted); font-size: 14px; }
+.ticket-row strong { font: 600 20px var(--mono); font-variant-numeric: tabular-nums; }
+.ticket-row strong.big { font-size: 30px; color: var(--accent); }
+
+/* Section heads */
+section.block { padding-block: clamp(28px, 5vw, 56px); border-top: 1px solid var(--line); }
+.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 24px; }
+.head h2 { font-size: clamp(24px, 3.2vw, 34px); margin-top: 8px; }
+.head p { margin: 6px 0 0; color: var(--muted); max-width: 60ch; }
+
+/* Filters */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button { font: 500 14px var(--body); border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: 8px 14px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.filters button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+/* Packages */
+.packages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 980px) { .packages { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .packages { grid-template-columns: 1fr; } }
+.pkg { position: relative; display: flex; flex-direction: column; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; min-width: 0; transition: transform .2s ease, border-color .2s ease; }
+.pkg:hover { transform: translateY(-3px); border-color: var(--accent); }
+.pkg.popular { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.badge { position: absolute; top: -11px; right: 18px; background: var(--accent); color: var(--accent-fg); font: 600 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; }
+.pkg-cat { font: 500 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.pkg h3 { font-size: 21px; }
+.pkg-price { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.pkg-price .from { font-size: 13px; color: var(--muted); }
+.pkg-price .price { font-size: 32px; font-weight: 500; }
+.pkg-time { font: 13px var(--mono); color: var(--muted); }
+.pkg ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 15px; }
+.pkg li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; }
+.pkg li::before { content: "✓"; color: var(--good); font-weight: 700; }
+.pkg .fit { margin: auto 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+
+/* Add-ons tariff */
+.tariff { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
+.tariff-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.tariff-row strong { font-weight: 600; }
+.tariff-row .price { font-size: 15px; text-align: right; white-space: nowrap; }
+.tariff-row p { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 14px; }
+
+/* Care plans */
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 10px; align-content: start; }
+.plan .price { font-size: 26px; }
+.plan .per { font: 13px var(--mono); color: var(--muted); }
+.plan p { margin: 0; color: var(--muted); font-size: 15px; }
+.note { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+.free { display: inline-flex; gap: 8px; align-items: center; background: var(--accent-soft); color: var(--fg); border-radius: 999px; padding: 8px 14px; font-size: 14px; font-weight: 500; }
+
+/* Steps */
+.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.steps li { counter-increment: step; display: grid; gap: 8px; align-content: start; }
+.steps li::before { content: counter(step); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font: 600 16px var(--mono); }
+.steps strong { font-family: var(--display); font-size: 17px; font-weight: 600; }
+.steps span { color: var(--muted); font-size: 15px; }
+
+/* Terms */
+.terms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 40px; margin: 0; }
+.terms div { border-top: 1px solid var(--line); padding-top: 12px; }
+.terms dt { font-weight: 600; }
+.terms dd { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+/* Contact */
+.contact { margin-block: clamp(28px, 5vw, 56px) clamp(40px, 6vw, 72px); background: var(--fg); color: var(--bg); border-radius: 18px; padding: clamp(24px, 5vw, 48px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: center; }
+.contact h2 { font-size: clamp(24px, 3.4vw, 36px); }
+.contact p { margin: 10px 0 0; opacity: .8; }
+.contact-actions { display: grid; gap: 10px; }
+.email { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; background: color-mix(in srgb, var(--bg) 10%, transparent); border: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); border-radius: 12px; padding: 10px 10px 10px 16px; }
+.email code { font: 500 16px var(--mono); user-select: all; flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.email button { font: 600 14px var(--body); border: 0; border-radius: 8px; padding: 8px 14px; background: var(--accent); color: var(--accent-fg); cursor: pointer; }
+.links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px; }
+.contact a { color: inherit; }
+footer { padding-block: 0 32px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 860px) {
+  .hero, .contact { grid-template-columns: 1fr; }
+  .plans { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tariff, .terms { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } .pkg:hover { transform: none; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Rate card · 2026 · Prices in INR</p>
+      <h1>Websites, online stores and web apps, <em>built to fit you.</em></h1>
+      <p class="lead">I'm Drose Shane. I design and build portfolios, business websites, e-commerce stores and custom web apps, including booking and billing systems running in research facilities at IISc Bengaluru.</p>
+    </div>
+    <aside class="ticket" aria-label="At a glance">
+      <div class="ticket-row"><span>Websites from</span><strong class="big price">₹4,999</strong></div>
+      <div class="ticket-row"><span>Online stores from</span><strong class="price">₹29,999</strong></div>
+      <div class="ticket-row"><span>Free support after launch</span><strong class="price">30 days</strong></div>
+      <div class="ticket-row"><span>Code and data</span><strong>Yours to keep</strong></div>
+    </aside>
+  </header>
+
+  <section class="block" aria-labelledby="packages-h">
+    <div class="head">
+      <div>
+        <p class="eyebrow">Packages</p>
+        <h2 id="packages-h">Pick a starting point</h2>
+        <p>Starting prices for typical projects. Every site is mobile-friendly, fast, and set up for Google search. You get a fixed quote before any work begins.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter packages">
+        <button type="button" id="f-all" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" id="f-personal" data-filter="personal" aria-pressed="false">Personal</button>
+        <button type="button" id="f-business" data-filter="business" aria-pressed="false">Business</button>
+        <button type="button" id="f-store" data-filter="store" aria-pressed="false">E-commerce</button>
+        <button type="button" id="f-app" data-filter="app" aria-pressed="false">Web apps</button>
+      </div>
+    </div>
+
+    <div class="packages">
+      <article class="pkg" data-cat="personal">
+        <span class="pkg-cat">Personal</span>
+        <h3>Landing page</h3>
+        <div class="pkg-price"><span class="from">from</span><span class="price">₹4,999</span></div>
+        <span class="pkg-time">Ready in 3–5 days</span>
+        <ul><li>One scrolling page for an offer, event or launch</li><li>Contact form and social links</li><li>Custom domain connection</li></ul>
+        <p class="fit">Best for events, campaigns and single products.</p>
+      </article>
+      <article class="pkg" data-cat="personal">
+        <span class="pkg-cat">Personal</span>
+        <h3>Portfolio website</h3>
+        <div class="pkg-price"><span class="from">from</span><span class="price">₹7,999</span></div>
+        <span class="pkg-time">Ready in 1–2 weeks</span>
+        <ul><li>Up to 6 sections: about, work, resume, publications, contact</li><li>Custom design with smooth animations</li><li>Downloadable resume and project gallery</li></ul>
+        <p class="fit">Best for students, researchers, designers and freelancers.</p>
+      </article>
+      <article class="pkg popular" data-cat="business">
+        <span class="badge">Most popular</span>
+        <span class="pkg-cat">Business</span>
+        <h3>Business website</h3>
+        <div class="pkg-price"><span class="from">from</span><span class="price">₹14,999</span></div>
+        <span class="pkg-time">Ready in 2–3 weeks</span>
+        <ul><li>Up to 8 pages: home, about, services, gallery, testimonials, contact</li><li>Enquiry form, Google Maps and WhatsApp button</li><li>Basic search engine setup</li></ul>
+        <p class="fit">Best for shops, clinics, studios, consultants and labs.</p>
+      </article>
+      <article class="pkg popular" data-cat="store">
+        <span class="badge">Best value</span>
+        <span class="pkg-cat">E-commerce</span>
+        <h3>Starter online store</h3>
+        <div class="pkg-price"><span class="from">from</span><span class="price">₹29,999</span></div>
+        <span class="pkg-time">Ready in 3–5 weeks</span>
+        <ul><li>Up to 50 products with cart and checkout</li><li>UPI, card and net-banking payments (Razorpay or similar)</li><li>Order emails and a simple admin panel</li></ul>
+        <p class="fit">Best for home businesses and small brands going online.</p>
+      </article>
+      <article class="pkg" data-cat="store">
+        <span class="pkg-cat">E-commerce</span>
+        <h3>Advanced online store</h3>
+        <div class="pkg-price"><span class="from">from</span><span class="price">₹69,999</span></div>
+        <span class="pkg-time">Ready in 6–10 weeks</span>
+        <ul><li>Unlimited products with sizes, colours and stock tracking</li><li>Coupons, customer accounts and shipping integration</li><li>Sales reports dashboard</li></ul>
+        <p class="fit">Best for growing brands with a full catalogue.</p>
+      </article>
+      <article class="pkg" data-cat="app">
+        <span class="pkg-cat">Web app</span>
+        <h3>Booking or appointment system</h3>
+        <div class="pkg-price"><span class="from">from</span><span class="price">₹34,999</span></div>
+        <span class="pkg-time">Ready in 4–6 weeks</span>
+        <ul><li>Live calendars with time slots and booking forms</li><li>Approvals and email confirmations</li><li>Admin dashboard with Excel export</li></ul>
+        <p class="fit">Best for clinics, salons, tutors and shared lab instruments.</p>
+      </article>
+      <article class="pkg" data-cat="app">
+        <span class="pkg-cat">Web app</span>
+        <h3>Custom management system</h3>
+        <div class="pkg-price"><span class="from">from</span><span class="price">₹99,999</span></div>
+        <span class="pkg-time">Ready in 8–12 weeks</span>
+        <ul><li>Bookings, user records and admin roles</li><li>Billing, invoices and charge sheets</li><li>Inventory tracking and revenue reports</li></ul>
+        <p class="fit">Best for facilities, institutes and multi-staff businesses.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="addons-h">
+    <div class="head"><div>
+      <p class="eyebrow">Add-ons</p>
+      <h2 id="addons-h">Add only what you need</h2>
+      <p>Anything already listed in your package is not charged again.</p>
+    </div></div>
+    <div class="tariff">
+      <div class="tariff-row"><strong>Extra page</strong><span class="price">₹1,499 each</span><p>One more designed page.</p></div>
+      <div class="tariff-row"><strong>Blog or news section</strong><span class="price">₹4,999</span><p>Posts you add and edit yourself, with categories.</p></div>
+      <div class="tariff-row"><strong>Edit-it-yourself content (CMS)</strong><span class="price">₹5,999</span><p>Change text, images and products without code.</p></div>
+      <div class="tariff-row"><strong>Online payments</strong><span class="price">₹4,999</span><p>UPI, card and net-banking checkout.</p></div>
+      <div class="tariff-row"><strong>Billing and invoices</strong><span class="price">₹11,999</span><p>Per-customer charges with printable invoices or charge sheets.</p></div>
+      <div class="tariff-row"><strong>Inventory tracking</strong><span class="price">₹7,999</span><p>Stock levels with low-stock alerts.</p></div>
+      <div class="tariff-row"><strong>Reports dashboard</strong><span class="price">₹7,999</span><p>Sales, usage or revenue reports with Excel download.</p></div>
+      <div class="tariff-row"><strong>Email and WhatsApp notifications</strong><span class="price">₹4,999</span><p>Confirmations, reminders and order updates. Message fees at actual cost.</p></div>
+      <div class="tariff-row"><strong>Second language</strong><span class="price">₹5,999 each</span><p>The site in Tamil, Hindi, Kannada or another language.</p></div>
+      <div class="tariff-row"><strong>Search engine setup</strong><span class="price">₹2,999</span><p>Google Search Console, sitemap and Google Business Profile.</p></div>
+      <div class="tariff-row"><strong>Data migration</strong><span class="price">₹2,999</span><p>Import products, customers or records from Excel or an old site.</p></div>
+      <div class="tariff-row"><strong>Domain and business email</strong><span class="price">₹1,499</span><p>Your own domain plus email like you@yourbrand.in.</p></div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="care-h">
+    <div class="head"><div>
+      <p class="eyebrow">Hosting &amp; care</p>
+      <h2 id="care-h">Keep it running smoothly</h2>
+      <p>Optional plans after launch. Yearly plans cost the same as 10 months.</p>
+    </div><span class="free">✓ First 30 days of support are free</span></div>
+    <div class="plans">
+      <div class="plan"><h3>Hosting only</h3><div><span class="price">₹499</span> <span class="per">/ month</span></div><p>Hosting set up and renewals managed. Server and domain fees billed at actual cost.</p></div>
+      <div class="plan"><h3>Basic care</h3><div><span class="price">₹1,499</span> <span class="per">/ month · ₹14,990 / year</span></div><p>Hosting, security updates, weekly backups, uptime monitoring and up to 2 hours of fixes a month.</p></div>
+      <div class="plan"><h3>Priority care</h3><div><span class="price">₹2,999</span> <span class="per">/ month · ₹29,990 / year</span></div><p>Everything in Basic, up to 6 hours of changes a month, and a reply within one working day.</p></div>
+    </div>
+    <p class="note">Extra work beyond the included hours: ₹500 per hour.</p>
+  </section>
+
+  <section class="block" aria-labelledby="steps-h">
+    <div class="head"><div>
+      <p class="eyebrow">How it works</p>
+      <h2 id="steps-h">From first call to launch</h2>
+    </div></div>
+    <ol class="steps">
+      <li><strong>Free 30-minute call</strong><span>We talk through your goals, your audience and sites you like.</span></li>
+      <li><strong>Fixed quote in 3 days</strong><span>A written scope, timeline and final price. No surprises later.</span></li>
+      <li><strong>Build and demo</strong><span>You try a working version and ask for changes.</span></li>
+      <li><strong>Launch and handover</strong><span>The site goes live, with a walkthrough so you can manage it yourself.</span></li>
+    </ol>
+  </section>
+
+  <section class="block" aria-labelledby="terms-h">
+    <div class="head"><div>
+      <p class="eyebrow">Terms</p>
+      <h2 id="terms-h">The fine print, kept short</h2>
+    </div></div>
+    <dl class="terms">
+      <div><dt>Payment</dt><dd>Projects under ₹15,000: 50% to start, 50% at launch. Larger projects: 40% to start, 30% at the demo, 30% at launch. UPI, bank transfer and institutional purchase orders accepted. Prices exclude applicable taxes.</dd></div>
+      <div><dt>Revisions</dt><dd>Two rounds of changes at each stage. New features added after the scope is agreed are quoted separately.</dd></div>
+      <div><dt>Ownership</dt><dd>Once paid in full, the website, its source code and all your data belong to you.</dd></div>
+      <div><dt>Not included</dt><dd>Writing page content, logo design, product photography, entering large catalogues, and third-party fees such as payment gateway charges or message costs.</dd></div>
+    </dl>
+  </section>
+
+  <section class="contact" aria-labelledby="contact-h">
+    <div>
+      <h2 id="contact-h">Tell me what you want to build.</h2>
+      <p>Send a short note about your project. I'll reply within two working days with next steps.</p>
+    </div>
+    <div class="contact-actions">
+      <div class="email"><code id="email-text">ignatious9894@gmail.com</code><button type="button" id="copy-email">Copy email</button></div>
+      <div class="links">
+        <a href="https://portfolio-drose.onrender.com/" target="_blank" rel="noopener noreferrer">Portfolio ↗</a>
+        <a href="https://www.linkedin.com/in/drose-ignatious-shane" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://accem-m4gy.onrender.com/" target="_blank" rel="noopener noreferrer">Live project ↗</a>
+      </div>
+    </div>
+  </section>
+  <footer>Starting prices for typical projects. Final pricing depends on scope and is confirmed in a written quote. © 2026 Drose Ignatious Shane.</footer>
+</main>
+
+<script>
+(function () {
+  var buttons = document.querySelectorAll('.filters button');
+  var cards = document.querySelectorAll('.pkg');
+  var grid = document.querySelector('.packages');
+  // Stretch the last visible card so no row ends with a lone card.
+  function balance() {
+    var visible = Array.prototype.filter.call(cards, function (c) { return !c.hidden; });
+    cards.forEach(function (c) { c.style.gridColumn = ''; });
+    var cols = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+    var rem = visible.length % cols;
+    if (cols > 1 && rem !== 0 && visible.length) {
+      visible[visible.length - 1].style.gridColumn = 'span ' + (cols - rem + 1);
+    }
+  }
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = btn.getAttribute('data-filter');
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+      cards.forEach(function (c) { c.hidden = f !== 'all' && c.getAttribute('data-cat') !== f; });
+      balance();
+    });
+  });
+  window.addEventListener('resize', balance);
+  balance();
+  var copy = document.getElementById('copy-email');
+  var text = document.getElementById('email-text');
+  copy.addEventListener('click', function () {
+    var done = function () { copy.textContent = 'Copied'; setTimeout(function () { copy.textContent = 'Copy email'; }, 1800); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(text);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copy.textContent = 'Selected: press Ctrl+C';
+    };
+    try {
+      navigator.clipboard.writeText(text.textContent).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+</body>
+</html>

@@ -118,7 +118,7 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
     <motion.section
       ref={screenRef}
       className={`intro-screen ${introStage === 'title' ? 'is-title-stage' : 'is-reveal-stage'}`}
-      aria-label="Opening title. Scroll or swipe up to reveal your portrait."
+      aria-label="Opening title. Scroll or swipe to reveal the portrait."
       tabIndex={0}
       onKeyDown={(event) => {
         if (event.key === ' ' && event.target instanceof HTMLButtonElement) return;
@@ -176,7 +176,7 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
         <motion.button
           className="intro-scroll-hint"
           type="button"
-          aria-label="Scroll up to reveal the portrait"
+          aria-label="Reveal the portrait"
           onClick={() => progress.set(1)}
           initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -184,7 +184,7 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
           transition={{ delay: reduceMotion ? 0 : 0.6, duration: reduceMotion ? 0.01 : 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className="intro-scroll-mouse" aria-hidden="true"><i /></span>
-          <span className="intro-scroll-label">SCROLL UP</span>
+          <span className="intro-scroll-label">SCROLL TO REVEAL</span>
         </motion.button>
       )}
       {showAction && (
@@ -245,7 +245,7 @@ export function ProfileScreen({ profiles, selected, onSelect, onBack }: ProfileS
       </div>
       <div className="profile-picker">
         <h1 id="profile-heading">Explore <em>my world</em></h1>
-        <p className="profile-explainer">From molecular science to digital solutions. Choose a journey to discover my work, expertise, and ideas.</p>
+        <p className="profile-explainer">From molecular science to digital solutions. Choose a path to explore my work and expertise.</p>
         <div className={`profile-options${hoveredProfile ? ' has-hovered-profile' : ''}`}>
           {profiles.map((profile, index) => (
             <motion.button

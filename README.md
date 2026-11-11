@@ -37,7 +37,7 @@ The production site is generated in `dist/` and can be deployed to a static host
 - `public/assets/drose-shane-cryo-em-specialist-portrait-warm.webp` is the alternate optimized portrait layered into the home hero.
 - The `public/assets/drose-shane-*-profile.webp` files are resized, optimized profile-card images for The Scientist, The Builder, and The Full Story. Project-cover screenshots are served as resized WebP files.
 
-No technology stack, impact metrics, or personal contact address is invented. Facility project details link to the live websites and do not expose source repository links.
+Impact figures (users, EMDB structures, resolution, uptime) are taken from the owner's resume; nothing is invented. Facility project details link to the live websites and do not expose source repository links.
 
 ## Accessibility and behavior
 

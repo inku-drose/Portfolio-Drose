@@ -12,17 +12,17 @@ export interface Profile {
 export const profiles: Profile[] = [
   {
     id: 'scientist',
-    name: 'The Biologist',
-    descriptor: 'CRYO-EM · STRUCTURE · FACILITY OPERATIONS',
-    bestFor: 'For research collaborators',
+    name: 'The Scientist',
+    descriptor: 'CRYO-EM · STRUCTURAL BIOLOGY · FACILITY OPERATIONS',
+    bestFor: 'For researchers and collaborators',
     image: '/assets/drose-shane-cryo-em-specialist-profile.webp',
     imageAlt: 'Cryo-electron microscope and a blue molecular structure',
   },
   {
     id: 'builder',
-    name: 'The Web Developer',
+    name: 'The Builder',
     descriptor: 'WEB APPS · DIGITAL SYSTEMS · AUTOMATION',
-    bestFor: 'For teams who need digital tools',
+    bestFor: 'For anyone who needs a website or web app',
     image: '/assets/drose-shane-digital-systems-builder-profile.webp',
     imageAlt: 'Laptop displaying digital dashboards and workflow tools',
   },
@@ -30,7 +30,7 @@ export const profiles: Profile[] = [
     id: 'full',
     name: 'The Full Story',
     descriptor: 'SCIENCE × DIGITAL × IMPACT',
-    bestFor: 'For the complete picture',
+    bestFor: 'Start here for the complete picture',
     image: '/assets/drose-shane-full-story-profile.webp',
     imageAlt: 'Molecular science connected to digital data systems',
   },
@@ -57,22 +57,22 @@ export const projects: PortfolioProject[] = [
     category: 'Facility Operations',
     eyebrow: 'CRYO-EM FACILITY · OPERATIONS',
     synopsis:
-      'A facility operations portal for the Advanced Centre for Cryo Electron Microscopy.',
+      'An all-in-one operations portal for the Advanced Centre for Cryo-Electron Microscopy at IISc.',
     problem:
-      'A shared facility needs coordinated access to instrument slots and clear workflows for administrators, billing follow-up, and grid inventory.',
+      'A national facility serving academic and industry users needs one place to manage instrument slots, user billing, and grid inventory, with clear oversight for administrators.',
     features: [
-      'Facility slot booking',
-      'Administrator workflows',
-      'Billing, chart-sheet generation, and revenue reports',
+      'Instrument slot booking and queue management',
+      'Administrator workflows and user records',
+      'Billing, charge-sheet generation, and revenue reports',
       'Grid inventory tracking',
     ],
     impact:
-      'Brings key operational workflows for the facility into one digital system.',
+      'Brings booking, billing, and inventory into one system for 100+ registered users, giving the facility real-time visibility into usage and revenue.',
     tags: [
       'Facility scheduling',
       'Grid inventory',
       'Billing',
-      'Chart-sheet generation',
+      'Charge sheets',
       'Revenue reporting',
     ],
     liveUrl: 'https://accem-m4gy.onrender.com/',
@@ -84,20 +84,21 @@ export const projects: PortfolioProject[] = [
     category: 'Instrument Scheduling',
     eyebrow: 'INSTRUMENT SLOTS · BOOKING WORKFLOW',
     synopsis:
-      'A structured booking workflow for TEM and ultramicrotome instrument slots.',
+      'A structured booking system for TEM and ultramicrotome sessions.',
     problem:
-      'Spreadsheet-based, first-come-first-served scheduling makes it difficult to manage instrument slots and timed working windows.',
+      'Instrument slots were managed in a shared, first-come-first-served spreadsheet, which made fair access and timed working windows hard to enforce.',
     features: [
-      'TEM slots scheduling',
-      'Ultramicrotome slots scheduling',
+      'TEM slot scheduling',
+      'Ultramicrotome slot scheduling',
       'Timed working windows',
     ],
     impact:
-      'Replaces the spreadsheet-based first-come-first-served process with a workflow for managing instrument slots and working windows.',
+      'Replaces the shared spreadsheet with a structured booking flow that enforces working windows and makes slot availability clear to every user.',
     tags: [
-      'TEM slots scheduling',
-      'Ultramicrotome slots scheduling',
-      'Timed working windows',
+      'TEM',
+      'Ultramicrotomy',
+      'Slot scheduling',
+      'Working windows',
     ],
     liveUrl: 'https://tem-booking-page-tapo.onrender.com/',
     artwork: 'tem',
@@ -108,21 +109,20 @@ export const projects: PortfolioProject[] = [
     category: 'Facility Scheduling',
     eyebrow: 'HISTOPATHOLOGY · FACILITY BOOKING',
     synopsis:
-      'A booking workflow for individual histopathology instrument slots and facility access.',
+      'Slot booking for individual histopathology instruments, with the required user forms built in.',
     problem:
-      'Researchers need to select an individual instrument slot, book within timed windows, and submit the required user forms.',
+      'Researchers need to choose a specific instrument, book within set time windows, and submit the facility’s user forms, ideally in a single step.',
     features: [
-      'Individual instrument slots',
-      'Instrument slot booking',
+      'Per-instrument slot booking',
       'Timed booking windows',
-      'User forms',
+      'Built-in user forms',
     ],
     impact:
-      'Brings instrument-slot selection, timed booking, and user forms together in one workflow.',
+      'Combines instrument selection, timed booking, and user forms into one guided workflow.',
     tags: [
-      'Individual instrument slots',
-      'Instrument slot booking',
-      'Timed booking windows',
+      'Histopathology',
+      'Instrument booking',
+      'Time windows',
       'User forms',
     ],
     liveUrl: 'https://microtome.onrender.com/',
@@ -134,17 +134,17 @@ export const projects: PortfolioProject[] = [
     category: 'Instrument Scheduling',
     eyebrow: 'MULTI-ROUTE BOOKING · LIVE CALENDARS',
     synopsis:
-      'A flow cytometry booking portal that brings website bookings and bookings from a separate window into one coordinated workflow.',
+      'A flow cytometry booking portal that brings online bookings and bookings from a separate booking window into one live calendar.',
     problem:
-      'Bookings made through separate routes need shared calendar visibility, user forms, and operator-assisted controls to stay coordinated.',
+      'Bookings arriving through two different routes need a shared live calendar, consistent user forms, and operator controls to avoid clashes.',
     features: [
       'Live calendars',
-      'Website and separate-window booking',
-      'User-form-based booking',
+      'Online and separate-window booking',
+      'Form-based booking requests',
       'Operator-assisted booking controls',
     ],
     impact:
-      'Integrates both booking routes with live calendar visibility, user forms, and operator-assisted controls.',
+      'Unifies both booking routes in one live calendar, with user forms and operator controls that keep every booking coordinated.',
     tags: [
       'Flow cytometry',
       'Live calendars',
@@ -171,8 +171,8 @@ export const researchProjects: ResearchProject[] = [
     degree: 'MASTER’S THESIS',
     title: 'Structural and Functional Evaluation of Mutated Alpha Hemolysin using Cryo-EM',
     methods: [
-      'Purified recombinant protein using Ni-NTA affinity chromatography and size-exclusion chromatography (SEC).',
-      'Evaluated structure using NS-TEM and cryo-EM single-particle analysis (SPA), comparing mutants with wild-type strains.',
+      'Purified recombinant alpha-hemolysin by Ni-NTA affinity and size-exclusion chromatography (SEC).',
+      'Compared mutant and wild-type assemblies using negative-stain TEM and cryo-EM single-particle analysis (SPA).',
     ],
     tags: ['Protein purification', 'NS-TEM', 'Cryo-EM SPA'],
   },
@@ -181,8 +181,8 @@ export const researchProjects: ResearchProject[] = [
     degree: 'M.TECH · ADDITIONAL PROJECT',
     title: 'Cloning & Expression of Phage Proteins in Pseudomonas aeruginosa',
     methods: [
-      'Cloned phage proteins in a host system.',
-      'Used fluorescence microscopy of phage-infected cells to identify morphological changes in the bacterial host.',
+      'Cloned and expressed phage proteins in a bacterial host system.',
+      'Used fluorescence microscopy of phage-infected cells to track morphological changes in the bacterial host.',
     ],
     tags: ['Cloning', 'Fluorescence microscopy', 'Phage biology'],
   },
@@ -191,8 +191,8 @@ export const researchProjects: ResearchProject[] = [
     degree: 'BACHELOR’S PROJECT',
     title: 'Pharmacoinformatics Screening of Aegle marmelos Phytochemicals for IBS Targets',
     methods: [
-      'Optimised extraction of Aegle marmelos leaf extract using Soxhlet extraction.',
-      'Carried out molecular docking and simulation studies of phytocompounds.',
+      'Optimised Soxhlet extraction of phytochemicals from Aegle marmelos leaves.',
+      'Screened the phytocompounds against IBS targets by molecular docking and simulation; published in the Journal of Computational Biophysics and Chemistry (2023).',
     ],
     tags: ['Soxhlet extraction', 'Molecular docking', 'Molecular simulation'],
   },
@@ -252,15 +252,15 @@ export const toolkit = [
   {
     title: 'Digital development',
     description:
-      'I start with a clear idea of what needs to improve and where. Using AI-assisted development, I turn that understanding into practical tools and build through to a complete, working process.',
-    tags: ['Problem-first ideas', 'AI-assisted development', 'Working solutions'],
+      'I begin by mapping exactly what slows people down, and where. With AI-assisted development, I turn that understanding into working tools and take them all the way to deployment and everyday use.',
+    tags: ['Problem-first design', 'AI-assisted development', 'Built to deployment'],
     tone: 'violet',
   },
   {
     title: 'People-first problem solving',
     description:
-      'I focus on the real concern: what is difficult, what takes too much effort, and what would make the work easier for the people doing it. The aim is a useful solution, not technology for its own sake.',
-    tags: ['Understand the need', 'Make work easier', 'Practical impact'],
+      'I start with the people doing the work: what is difficult, what takes too long, and what would make their day easier. The goal is a tool people actually use, not technology for its own sake.',
+    tags: ['User needs first', 'Less manual effort', 'Practical impact'],
     tone: 'blue',
   },
   {
@@ -291,13 +291,13 @@ export const careerExperience = [
     title: 'Cryo-EM Technical Specialist & Facility Manager',
     organization:
       'Advanced Centre for Cryo Electron Microscopy · Indian Institute of Science, Bengaluru',
-    detail: 'Three years of experience in cryo-EM and facility operations.',
+    detail:
+      'Since 2023, supporting 30+ active users and 85+ EMDB-deposited structures, with data reaching 2.8 Å resolution.',
     responsibilities: [
-      'Sample preparation and grid freezing',
-      'Single-particle acquisition',
-      'Cryo-electron tomography',
-      'Grid storage and data management',
-      'Shared instrument and facility workflows',
+      'Run day-to-day operations of a national cryo-EM facility for academic and industry users',
+      'Maintain the Talos Arctica and Talos L120C at 95% uptime, coordinating Thermo Fisher and Gatan service',
+      'Screen grids, optimise vitrification, and have trained 50+ users in cryo-EM workflows',
+      'Oversee data storage and transfer, LN2 supply, consumables, and facility safety',
     ],
   },
 ];
@@ -307,21 +307,21 @@ export const teachingTrainingVolunteering = [
     role: 'TEACHING ASSISTANT',
     title:
       'Fundamentals of Cryo-Electron Microscopy (Cryo-EM) and 3D Image Processing in Structural Biology',
-    organization: 'NPTEL course · IISc Bangalore',
+    organization: 'NPTEL · IISc Bengaluru',
     year: '2025–2026',
+  },
+  {
+    role: 'STUDENT VOLUNTEER',
+    title: 'Electron microscopy training programme',
+    organization: 'Electron Microscope Society of India (EMSI)',
+    year: '2025',
   },
   {
     role: 'STUDENT VOLUNTEER',
     title:
       'EMBO Practical Course on Cryo-Electron Microscopy and 3D Image Processing (CEM3DIP)',
-    organization: 'EMBO Practical Course',
+    organization: 'European Molecular Biology Organization (EMBO)',
     year: '2024',
-  },
-  {
-    role: 'STUDENT VOLUNTEER',
-    title: 'Electron Microscope Society of India (EMSI) training programme',
-    organization: 'Electron Microscope Society of India',
-    year: '2025',
   },
 ];
 
@@ -354,31 +354,105 @@ export const educationAchievements = [
 export const cryoEmPractice = {
   samplePreparation: [
     {
-      category: 'Negative-stain TEM (NS-TEM)',
-      details: ['Talos L120C'],
+      category: 'Negative-stain screening (NS-TEM)',
+      details: ['Talos L120C', 'Pelco easiGLOW'],
     },
     {
-      category: 'Plunge freezing',
-      details: ['Vitrobot Mark 4', 'Leica GP2', 'Vitriflex'],
+      category: 'Vitrification',
+      details: ['Vitrobot Mark IV', 'Leica EM GP2', 'VitriFlex'],
     },
   ],
   dataCollection: [
     {
-      category: 'Acquisition software',
-      details: ['Latitude', 'EPU'],
+      category: 'Microscopes & software',
+      details: ['Talos Arctica 200 kV', 'EPU', 'Latitude (Gatan)'],
     },
     {
-      category: 'Data acquisition methods',
-      details: ['Single-particle acquisition (SPA)', 'Cryo-electron tomography (cryo-ET)'],
+      category: 'Acquisition methods',
+      details: ['Single-particle analysis (SPA)', 'Cryo-electron tomography (cryo-ET)'],
+    },
+  ],
+  processing: [
+    {
+      category: 'Image processing',
+      details: ['RELION', 'CryoSPARC', 'cisTEM', 'EMAN'],
+    },
+    {
+      category: 'Model building & validation',
+      details: ['UCSF ChimeraX', 'Coot', 'Phenix', 'MolProbity'],
     },
   ],
 };
 
 export const websiteBuildingStory = {
-  title: 'Making demanding work smarter',
+  title: 'Why I build tools',
   description:
-    'I saw how much effort everyday tasks can demand, even when digital tools can make the work smarter. I began learning to build these tools to make work and daily life easier for me and for people around me facing similar challenges.',
+    'Running a shared facility showed me how much time goes into scheduling, billing, and record-keeping that software could handle. I started building tools to remove that friction, first for my own facility and now for others facing the same problems.',
 };
+
+export interface ServicePackage {
+  category: string;
+  name: string;
+  price: string;
+  timeline: string;
+  highlights: string[];
+  badge?: string;
+}
+
+// Keep these prices in sync with public/rate-card.html.
+export const servicePackages: ServicePackage[] = [
+  {
+    category: 'Personal',
+    name: 'Landing page',
+    price: '₹4,999',
+    timeline: '3–5 days',
+    highlights: ['One scrolling page for an offer or event', 'Contact form and social links'],
+  },
+  {
+    category: 'Personal',
+    name: 'Portfolio website',
+    price: '₹7,999',
+    timeline: '1–2 weeks',
+    highlights: ['Up to 6 sections with custom design', 'Resume download and project gallery'],
+  },
+  {
+    category: 'Business',
+    name: 'Business website',
+    price: '₹14,999',
+    timeline: '2–3 weeks',
+    highlights: ['Up to 8 pages', 'Enquiry form, Google Maps, and WhatsApp button'],
+    badge: 'Most popular',
+  },
+  {
+    category: 'E-commerce',
+    name: 'Starter online store',
+    price: '₹29,999',
+    timeline: '3–5 weeks',
+    highlights: ['Up to 50 products with cart and checkout', 'UPI, card, and net-banking payments'],
+    badge: 'Best value',
+  },
+  {
+    category: 'E-commerce',
+    name: 'Advanced online store',
+    price: '₹69,999',
+    timeline: '6–10 weeks',
+    highlights: ['Unlimited products, variants, and coupons', 'Customer accounts and sales reports'],
+  },
+  {
+    category: 'Web app',
+    name: 'Booking system',
+    price: '₹34,999',
+    timeline: '4–6 weeks',
+    highlights: ['Live calendars, time slots, and approvals', 'Admin dashboard with Excel export'],
+  },
+  {
+    category: 'Web app',
+    name: 'Custom management system',
+    price: '₹99,999',
+    timeline: '8–12 weeks',
+    highlights: ['Bookings, billing, invoices, and charge sheets', 'Inventory and revenue reports'],
+  },
+];
 
 export interface Publication {
   title: string;
@@ -386,19 +460,19 @@ export interface Publication {
   venue: string;
   year: string;
   details: string;
-  url: string;
+  url?: string;
+  status?: string;
 }
 
 export const publications: Publication[] = [
   {
     title:
-      'Docking simulation and ADMET prediction based investigation on the phytochemical constituents of Noni (Morinda citrifolia) fruit as a potential anticancer drug',
-    authors:
-      'Kaliraj Chandran, Drose Ignatious Shane, Azar Zochedh, Asath Bahadur Sultan, and Thandavarayan Kathiresan',
-    venue: 'In Silico Pharmacology',
-    year: '2022',
-    details: 'Volume 10, Issue 1, Article 14',
-    url: 'https://doi.org/10.1007/s40203-022-00130-4',
+      'A unified cryo-EM workflow for high-resolution characterization of liposomes and cargo-loaded liposomes',
+    authors: 'Drose Ignatious Shane, A. Chatterjee, P. P. Das, et al.',
+    venue: 'Small',
+    year: '2026',
+    details: 'First author',
+    status: 'In revision',
   },
   {
     title:
@@ -410,26 +484,36 @@ export const publications: Publication[] = [
     details: 'Volume 22, Issue 7, Pages 863–879',
     url: 'https://doi.org/10.1142/S273741652350045X',
   },
+  {
+    title:
+      'Docking simulation and ADMET prediction based investigation on the phytochemical constituents of Noni (Morinda citrifolia) fruit as a potential anticancer drug',
+    authors:
+      'Kaliraj Chandran, Drose Ignatious Shane, Azar Zochedh, Asath Bahadur Sultan, and Thandavarayan Kathiresan',
+    venue: 'In Silico Pharmacology',
+    year: '2022',
+    details: 'Volume 10, Issue 1, Article 14',
+    url: 'https://doi.org/10.1007/s40203-022-00130-4',
+  },
 ];
 
 export const profileContent = {
   scientist: {
     intro:
-      'Cryo-EM practice, facility operations, research projects, and biotechnology education.',
-    projectTitle: 'Projects & research',
-    projectKicker: 'ACADEMIC & RESEARCH PROJECTS',
-    projectNote: 'Biotechnology and cryo-EM research projects.',
+      'I manage a national cryo-EM facility at IISc Bengaluru, running the instruments, workflows, and user support behind high-resolution structural biology.',
+    projectTitle: 'Research projects',
+    projectKicker: 'ACADEMIC RESEARCH',
+    projectNote: 'From protein purification and cryo-EM to pharmacoinformatics.',
   },
   builder: {
     intro:
-      'Websites and digital workflows shaped around the needs of shared scientific facilities.',
+      'I build portfolios, business websites, online stores, and custom web apps, including booking and billing systems now running in research facilities at IISc.',
     projectTitle: 'Live websites & digital projects',
     projectKicker: 'TOOLS BUILT FROM FACILITY NEEDS',
     projectNote: 'Live facility websites and booking systems.',
   },
   full: {
     intro:
-      'A unified view of my biotechnology education, cryo-EM experience and research, and digital tools built around facility needs.',
+      'A biotechnologist by training and a cryo-EM specialist by profession. I run facility operations at IISc and build the digital systems that help shared facilities run smoothly.',
     projectTitle: 'Research & digital projects',
     projectKicker: 'SCIENCE MEETS DIGITAL PRACTICE',
     projectNote: 'Research projects and facility websites built around real scientific workflows.',
