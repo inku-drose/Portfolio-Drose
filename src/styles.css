@@ -848,3 +848,22 @@ svg { width: 18px; height: 18px; flex: 0 0 auto; }
   .pricing-price { font-size: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { .pricing-card, .pricing-card:hover { transform: none; transition: none; } }
+
+/* Highlight strip: key numbers right after the hero */
+.highlight-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 var(--gutter); border: 1px solid var(--line); border-radius: 3px; background: color-mix(in srgb, var(--panel) 88%, transparent); backdrop-filter: blur(12px); }
+.highlight-stat { display: grid; gap: 6px; align-content: start; min-width: 0; padding: 20px clamp(16px, 2vw, 26px); }
+.highlight-stat + .highlight-stat { border-left: 1px solid var(--line); }
+.highlight-stat strong { color: var(--cyan-soft); font: 500 clamp(26px, 2.6vw, 36px)/1 var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.highlight-stat span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+.inline-link { color: var(--cyan-soft); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--cyan) 50%, transparent); text-underline-offset: 3px; }
+.inline-link:hover { color: var(--white); }
+@media (max-width: 900px) {
+  .highlight-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .highlight-stat:nth-child(3) { border-left: 0; }
+  .highlight-stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 700px) {
+  .highlight-stat { padding: 16px 14px; }
+  .highlight-stat strong { font-size: 24px; }
+  .highlight-stat span { font-size: 12px; }
+}

@@ -35,6 +35,8 @@ The production site is generated in `dist/` and can be deployed to a static host
 - `src/styles.css` contains responsive styling, animation, focus states, and reduced-motion fallbacks.
 - `public/assets/protein-rotation.mp4` and `drose-shane-protein-rotation-poster.jpg` are supplied media assets.
 - `public/assets/drose-shane-cryo-em-specialist-portrait-warm.webp` is the alternate optimized portrait layered into the home hero.
+- `public/rate-card.html` redirects to Tekvara Studio (https://tekvara-studio.onrender.com/), which now hosts the web development rate card. Prices in `servicePackages` should match it.
+- Open a profile directly with `?view=scientist`, `?view=builder`, or `?view=full`; this skips the intro and profile picker.
 - The `public/assets/drose-shane-*-profile.webp` files are resized, optimized profile-card images for The Scientist, The Builder, and The Full Story. Project-cover screenshots are served as resized WebP files.
 
 Impact figures (users, EMDB structures, resolution, uptime) are taken from the owner's resume; nothing is invented. Facility project details link to the live websites and do not expose source repository links.
