@@ -12,6 +12,7 @@ import {
   publications,
   projects,
   researchProjects,
+  servicePackages,
   teachingTrainingVolunteering,
   toolkit,
   websiteBuildingStory,
@@ -105,7 +106,7 @@ function ProjectSection({
       {(profile === 'scientist' || profile === 'full') && (
         <div className="research-projects">
           <div className="research-projects-heading">
-            <h3>{profile === 'scientist' ? 'Three projects spanning cryo-EM, cell biology, and pharmacoinformatics' : 'Research projects'}</h3>
+            <h3>{profile === 'scientist' ? 'Three projects across structural biology, microbiology, and pharmacoinformatics' : 'Research projects'}</h3>
           </div>
           <div className="research-project-grid">
             {researchProjects.map((project) => (
@@ -153,34 +154,32 @@ function CryoEmPracticeCard({
   return (
     <article className="profile-story-card workflow-card featured-role scientific-practice-card">
       <p className="section-kicker">SCIENTIFIC PRACTICE</p>
-      <h3 className="practice-heading">Cryo-EM sample preparation</h3>
+      <h3 className="practice-heading">From sample to structure</h3>
       <div className="scientific-practice-layout">
         <section className="practice-role-details">
           <p className="section-kicker">CURRENT ROLE</p>
           <h4>{currentRole.title}</h4>
-          <p>{showOrganization ? `${currentRole.organization} · ` : ''}{currentRole.detail}</p>
-          <ul className="role-responsibilities">{currentRole.responsibilities?.slice(0, 3).map((item) => <li key={item}>{item}</li>)}</ul>
+          <p>{showOrganization ? `${currentRole.organization}. ` : ''}{currentRole.detail}</p>
+          <ul className="role-responsibilities">{currentRole.responsibilities.map((item) => <li key={item}>{item}</li>)}</ul>
         </section>
         <div className="practice-technical-details">
-          <div className="practice-spec-grid">
-            {cryoEmPractice.samplePreparation.map((practice) => (
-              <section className="practice-spec" key={practice.category}>
-                <h4>{practice.category}</h4>
-                <ul>{practice.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
-              </section>
-            ))}
-          </div>
-          <section className="practice-data-section" aria-labelledby="practice-data-heading">
-            <h4 id="practice-data-heading">Data collection</h4>
-            <div className="practice-spec-grid">
-              {cryoEmPractice.dataCollection.map((practice) => (
-                <section className="practice-spec" key={practice.category}>
-                  <h5>{practice.category}</h5>
-                  <ul>{practice.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
-                </section>
-              ))}
-            </div>
-          </section>
+          {[
+            { id: 'practice-prep-heading', heading: 'Sample preparation', items: cryoEmPractice.samplePreparation },
+            { id: 'practice-data-heading', heading: 'Data collection', items: cryoEmPractice.dataCollection },
+            { id: 'practice-processing-heading', heading: 'Processing & analysis', items: cryoEmPractice.processing },
+          ].map((group, groupIndex) => (
+            <section className={`practice-data-section${groupIndex === 0 ? ' practice-first-section' : ''}`} aria-labelledby={group.id} key={group.id}>
+              <h4 id={group.id}>{group.heading}</h4>
+              <div className="practice-spec-grid">
+                {group.items.map((practice) => (
+                  <section className="practice-spec" key={practice.category}>
+                    <h5>{practice.category}</h5>
+                    <ul>{practice.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
+                  </section>
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
       </div>
     </article>
@@ -196,10 +195,10 @@ function CareerSection({ profile }: { profile: ProfileId }) {
     );
     return (
       <section className="profile-content-section" id="experience" aria-labelledby="experience-heading">
-        <SectionHeading id="experience-heading" kicker="EXPERIENCE · DIGITAL SYSTEMS" title="Turning hard work into smarter workflows" detail="Digital tools shaped around real needs." />
+        <SectionHeading id="experience-heading" kicker="EXPERIENCE · DIGITAL SYSTEMS" title="Turning facility friction into working tools" detail="Software built around how scientific facilities actually work." />
         <div className="profile-story-columns">
           <article className="profile-story-card">
-            <p className="section-kicker">THE PRACTICAL NEED</p>
+            <p className="section-kicker">THE STARTING POINT</p>
             <h3>{websiteBuildingStory.title}</h3>
             <p>{websiteBuildingStory.description}</p>
           </article>
@@ -222,7 +221,7 @@ function CareerSection({ profile }: { profile: ProfileId }) {
     );
     return (
       <section className="profile-content-section" id="experience" aria-labelledby="experience-heading">
-        <SectionHeading id="experience-heading" kicker="THE FULL STORY" title="Scientific practice, shaped into digital tools" detail="Bringing hands-on cryo-EM experience together with practical digital development." />
+        <SectionHeading id="experience-heading" kicker="THE FULL STORY" title="Scientific practice, shaped into digital tools" detail="Hands-on cryo-EM expertise, combined with practical digital development." />
         <div className="profile-story-columns full-story-columns">
           <CryoEmPracticeCard currentRole={currentRole} showOrganization />
           <article className="profile-story-card digital-development-card">
@@ -251,7 +250,7 @@ function CareerSection({ profile }: { profile: ProfileId }) {
         id="experience-heading"
         kicker="PROFESSIONAL EXPERIENCE"
         title="Cryo-EM & facility operations"
-        detail={<><span className="institution-name">Advanced Center for Cryo Electron Microscopy <span className="institution-acronym">(ACCEM)</span></span><span>Indian Institute of Science, Bangalore</span></>}
+        detail={<><span className="institution-name">Advanced Centre for Cryo-Electron Microscopy <span className="institution-acronym">(ACCEM)</span></span><span>Indian Institute of Science, Bengaluru</span></>}
       />
       <div className="profile-story-columns scientist-experience-columns">
         <CryoEmPracticeCard currentRole={currentRole} showOrganization={false} />
@@ -284,10 +283,42 @@ function TeachingTrainingSection() {
   );
 }
 
+function PricingSection() {
+  return (
+    <section className="profile-content-section pricing-section" id="pricing" aria-labelledby="pricing-heading">
+      <SectionHeading
+        id="pricing-heading"
+        kicker="SERVICES & PRICING"
+        title="Websites, stores, and web apps"
+        detail="Starting prices in INR. You get a fixed quote before any work begins."
+      />
+      <div className="pricing-grid">
+        {servicePackages.map((item) => (
+          <article className={`pricing-card${item.badge ? ' is-featured' : ''}`} key={item.name}>
+            {item.badge && <span className="pricing-badge">{item.badge}</span>}
+            <p className="section-kicker">{item.category}</p>
+            <h3>{item.name}</h3>
+            <p className="pricing-price"><small>from</small> {item.price}</p>
+            <p className="pricing-timeline">Ready in {item.timeline}</p>
+            <ul>{item.highlights.map((point) => <li key={point}>{point}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+      <div className="pricing-footer">
+        <p>Every project includes 30 days of free support. Care plans start at ₹499 a month, and add-ons such as payments, a blog, or billing start at ₹1,499. You own the code and data.</p>
+        <div className="pricing-actions">
+          <a className="closing-link closing-link-primary" href="mailto:ignatious9894@gmail.com?subject=Website%20quote%20request">Get a free quote <Icon name="arrow" /></a>
+          <a className="closing-link" href="/rate-card.html" target="_blank" rel="noopener noreferrer">Full rate card <Icon name="external" /></a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function PublicationsSection() {
   return (
     <section className="profile-content-section" id="publications" aria-labelledby="publications-heading">
-      <SectionHeading id="publications-heading" kicker="RESEARCH OUTPUT" title="Publications" detail="Research publications and scientific contributions." />
+      <SectionHeading id="publications-heading" kicker="RESEARCH OUTPUT" title="Publications" detail="Journal articles and manuscripts, newest first." />
       {publications.length ? (
         <div className="publication-list">
           {publications.map((publication) => (
@@ -295,14 +326,14 @@ function PublicationsSection() {
               <p className="section-kicker">{publication.venue} · {publication.year}</p>
               <h3>{renderScientificNames(publication.title)}</h3>
               <p>
-                {publication.authors.split(/(Drose Ignatious Shane)/g).map((author, index) =>
-                  author === 'Drose Ignatious Shane'
+                {publication.authors.split(/(Drose Ignatious Shane(?: Michaelson)?)/g).map((author, index) =>
+                  author.startsWith('Drose Ignatious Shane')
                     ? <strong key={index}>{author}</strong>
                     : author,
                 )}
               </p>
-              <p className="publication-details">{publication.details}</p>
-              <a className="publication-link" href={publication.url} target="_blank" rel="noopener noreferrer">Read publication <Icon name="external" /></a>
+              <p className="publication-details">{publication.details}{publication.status ? ` · ${publication.status}` : ''}</p>
+              {publication.url && <a className="publication-link" href={publication.url} target="_blank" rel="noopener noreferrer">Read publication <Icon name="external" /></a>}
             </article>
           ))}
         </div>
@@ -316,7 +347,7 @@ function PublicationsSection() {
 function EducationSection() {
   return (
     <section className="profile-content-section" id="education" aria-labelledby="education-heading">
-      <SectionHeading id="education-heading" kicker="EDUCATION" title="Biotechnology foundations" detail="Academic training in biotechnology." />
+      <SectionHeading id="education-heading" kicker="EDUCATION" title="Biotechnology foundations" detail="M.Tech and B.Tech in Biotechnology, with a university gold medal." />
       <div className="education-list">
         {education.map((item) => (
           <article className="education-card" key={item.title}>
@@ -342,16 +373,12 @@ function EducationSection() {
 }
 
 function ClosingSection({ profile }: { profile: Profile }) {
-  const profileLabel = profile.id === 'scientist'
-    ? 'THE BIOLOGIST'
-    : profile.id === 'builder'
-      ? 'THE WEB DEVELOPER'
-      : 'THE FULL STORY';
+  const profileLabel = profile.name.toUpperCase();
   const closingLine = profile.id === 'scientist'
-    ? 'The science continues. Let’s stay connected.'
+    ? 'Open to research collaborations and cryo-EM projects. Let’s talk.'
     : profile.id === 'builder'
-      ? 'The next useful tool starts with a conversation.'
-      : 'From scientific discovery to digital solutions — let’s build what comes next.';
+      ? 'Need a booking, billing, or inventory system for your facility? Let’s talk.'
+      : 'From scientific discovery to digital solutions: let’s build what comes next.';
 
   const updateClosingTextGlow = (event: ReactPointerEvent<HTMLHeadingElement>) => {
     if (event.pointerType === 'touch') return;
@@ -435,7 +462,7 @@ export default function PortfolioApp() {
     const trackPointerGlow = (event: PointerEvent) => {
       if (event.pointerType === 'touch' || !(event.target instanceof Element)) return;
       const tile = event.target.closest<HTMLElement>(
-        '.profile-avatar, .project-card, .moment-card, .toolkit-card, .profile-story-card, .research-project-card, .teaching-training-card, .publication-item, .education-card',
+        '.profile-avatar, .project-card, .pricing-card, .moment-card, .toolkit-card, .profile-story-card, .research-project-card, .teaching-training-card, .publication-item, .education-card',
       );
       if (!tile) return;
 
@@ -494,11 +521,12 @@ export default function PortfolioApp() {
     full: profileContent.full.intro,
   }[activeProfile.id];
   const navigation = activeProfile.id === 'builder'
-    ? [{ label: 'Home', href: '#home' }, { label: 'Experience', href: '#experience' }, { label: 'Websites', href: '#projects' }]
+    ? [{ label: 'Home', href: '#home' }, { label: 'Experience', href: '#experience' }, { label: 'Websites', href: '#projects' }, { label: 'Pricing', href: '#pricing' }]
     : [
         { label: 'Home', href: '#home' },
         { label: 'Experience', href: '#experience' },
         { label: 'Projects', href: '#projects' },
+        ...(activeProfile.id === 'full' ? [{ label: 'Pricing', href: '#pricing' }] : []),
         { label: 'Publications', href: '#publications' },
         { label: 'Education', href: '#education' },
       ];
@@ -561,11 +589,11 @@ export default function PortfolioApp() {
                 Shane<span className="hero-name-glow" aria-hidden="true">Shane</span>
               </em>
             </motion.h1>
-            <h2 className="hero-tagline">{activeProfile.id === 'scientist' ? <>CRYO-EM SCIENCE<br />& FACILITY PRACTICE.</> : activeProfile.id === 'builder' ? <>DIGITAL SYSTEMS<br />FOR SCIENTIFIC WORK.</> : <>FROM MOLECULAR SCIENCE<br />TO DIGITAL SOLUTIONS.</>}</h2>
+            <h2 className="hero-tagline">{activeProfile.id === 'scientist' ? <>CRYO-EM SCIENCE<br />& FACILITY PRACTICE.</> : activeProfile.id === 'builder' ? <>WEBSITES &amp; WEB APPS<br />BUILT AROUND REAL NEEDS.</> : <>FROM MOLECULAR SCIENCE<br />TO DIGITAL SOLUTIONS.</>}</h2>
             <p className="hero-description">{profileIntro}</p>
             <div className="hero-cta">
-              <a className="cta cta-primary" href={activeProfile.id === 'builder' ? '#projects' : '#experience'}><Icon name="play" />{activeProfile.id === 'builder' ? 'Explore websites' : 'Explore experience'}</a>
-              <a className="cta cta-glass" href={activeProfile.id === 'scientist' ? '#publications' : '#projects'}><Icon name="arrow" />{activeProfile.id === 'scientist' ? 'Publications' : 'Selected projects'}</a>
+              <a className="cta cta-primary" href={activeProfile.id === 'builder' ? '#projects' : '#experience'}><Icon name="play" />{activeProfile.id === 'builder' ? 'View live projects' : 'Explore experience'}</a>
+              <a className="cta cta-glass" href={activeProfile.id === 'scientist' ? '#publications' : activeProfile.id === 'builder' ? '#pricing' : '#projects'}><Icon name="arrow" />{activeProfile.id === 'scientist' ? 'Publications' : activeProfile.id === 'builder' ? 'See pricing' : 'Selected projects'}</a>
             </div>
             <p className="hero-proof">Indian Institute of Science · Bengaluru</p>
           </div>
@@ -574,6 +602,7 @@ export default function PortfolioApp() {
         <div className={`catalogue-wrap profile-page profile-page-${activeProfile.id}`}>
           <CareerSection profile={activeProfile.id} />
           <ProjectSection profile={activeProfile.id} search={search} items={filteredProjects} onOpen={openProject} />
+          {activeProfile.id !== 'scientist' && <PricingSection />}
           {activeProfile.id !== 'builder' && <PublicationsSection />}
           {activeProfile.id !== 'builder' && <EducationSection />}
         </div>
